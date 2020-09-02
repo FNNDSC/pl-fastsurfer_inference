@@ -1,0 +1,8 @@
+chrisapp
+pudb
+h5py==2.9.0
+nibabel==2.5.1
+numpy==1.17.4
+scikit-image
+torch
+torchvision
