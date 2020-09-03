@@ -16,7 +16,7 @@ pl-fastsurfer_inference
 Abstract
 --------
 
-An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images
+An app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images
 
 
 Synopsis
@@ -35,7 +35,7 @@ Synopsis
 Description
 -----------
 
-``fastsurfer_inference.py`` is a ChRIS-based application that...
+``fastsurfer_inference.py`` is a ChRIS-based application that is capable of whole brain segmentation into 95 classes
 
 Arguments
 ---------
