@@ -42,6 +42,7 @@ TLDR
 Just pull the docker image
 
 .. code::
+
     docker pull fnndsc/pl-fastsurfer_inference
 
 Go straight to the examples section
