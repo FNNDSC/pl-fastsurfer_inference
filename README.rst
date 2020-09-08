@@ -122,7 +122,7 @@ This is just a quick and dirty way to get the plug-in working. Remember, the inp
        -> SubjectN
        
        
-Running the plug-in on GPU
+Running the plug-in on GPU (Note: the parameter `--gpus all` is not required. If however this plug-in fails to access the GPU, use the parameters)
 
 .. code:: bash
 
