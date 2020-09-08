@@ -23,7 +23,8 @@
 
 
 
-FROM fnndsc/ubuntu-python3:latest
+FROM tensorflow/tensorflow:latest-gpu-py3
+ARG PYTHON_VERSION=3.6
 MAINTAINER fnndsc "dev@babymri.org"
 
 ENV APPROOT="/usr/src/fastsurfer_inference"
@@ -32,8 +33,7 @@ COPY ["requirements.txt", "${APPROOT}"]
 COPY ["checkpoints", "/usr/src/checkpoints"]
 
 WORKDIR $APPROOT
-
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-
+ENTRYPOINT ["python3"]
 CMD ["fastsurfer_inference.py", "--help"]
