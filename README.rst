@@ -130,7 +130,8 @@ Running the plug-in on GPU (Note: the parameter ```--gpus all``` is not required
             fnndsc/pl-fastsurfer_inference fastsurfer_inference.py     \
             --t Subject1 --in_name brain.mgz                             \
             /incoming /outgoing
-   
+
+The output file will be saved as /outgoing/Subject1/aparc.DKTatlas+aseg.deep.mgz
 
 
 
