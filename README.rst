@@ -126,9 +126,9 @@ Running the plug-in on GPU
 
 .. code:: bash
 
-   docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
+   docker run --rm --gpus all -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
             fnndsc/pl-fastsurfer_inference fastsurfer_inference.py     \
-            --t 100307 --in_name brain.mgz                             \
+            --t Subject1 --in_name brain.mgz                             \
             /incoming /outgoing
    
 
