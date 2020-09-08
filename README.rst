@@ -107,7 +107,30 @@ Thus, getting inline help is:
 Examples
 --------
 
+This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure 
 
+.. code:: bash
+
+   -> inputdir
+       -> Subject1
+          -> brain.mgz
+       -> Subject2
+       -> Subject3
+       .
+       .
+       .
+       -> SubjectN
+       
+       
+Running the plug-in on GPU
+
+.. code:: bash
+
+   docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
+            fnndsc/pl-fastsurfer_inference fastsurfer_inference.py     \
+            --t 100307 --in_name brain.mgz                             \
+            /incoming /outgoing
+   
 
 
 
