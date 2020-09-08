@@ -37,6 +37,15 @@ Description
 
 ``fastsurfer_inference.py`` is a ChRIS-based application that is capable of whole brain segmentation into 95 classes
 
+TLDR
+------
+Just pull the docker image
+
+.. code::
+    docker pull fnndsc/pl-fastsurfer_inference
+
+Go straight to the examples section
+
 Arguments
 ---------
 
@@ -123,6 +132,8 @@ This is just a quick and dirty way to get the plug-in working. Remember, the inp
        
        
 Running the plug-in on GPU (Note: the parameter ```--gpus all``` is not required. If however this plug-in fails to access the GPU, use the parameters)
+
+To run using ``docker``, be sure to assign an "input" directory to ``/incoming`` and an output directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
 
 .. code:: bash
 
