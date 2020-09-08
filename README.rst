@@ -132,8 +132,11 @@ This is just a quick and dirty way to get the plug-in working. Remember, the inp
        -> SubjectN
        
        
-Running the plug-in on GPU (Note: the parameter ```--gpus all``` is not required. If however this plug-in fails to access the GPU, use the parameters)
+Running the plug-in on GPU
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(Note: the parameter ```--gpus all``` is not required. If however this plug-in fails to access the GPU, use the parameters as mentioned below)
+
 
 To run using ``docker``, be sure to assign an "input" directory to ``/incoming`` and an output directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
 
