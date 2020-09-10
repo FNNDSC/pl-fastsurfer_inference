@@ -206,6 +206,8 @@ class Fastsurfer_inference(ChrisApp):
         self.add_argument('--simple_run', dest = 'simple_run', action='store_true',optional = True, default=False,type = str,
                       help='Simplified run: only analyse one given image specified by --in_name (output: --out_name). '
                            'Need to specify absolute path to both --in_name and --out_name if this option is chosen.')
+        # Adding check to parallel processing, default = false
+        self.add_argument('--run_parallel',dest = 'run_parallel', type= bool, action = 'store_true', optional = True , default = False, help = 'Enables parallel processing. Default mode : FALSE')
     def fast_surfer_cnn(self,img_filename, save_as, logger, args):
         """
         Cortical parcellation of single image
@@ -250,7 +252,7 @@ class Fastsurfer_inference(ChrisApp):
                                                                                        torch.cuda.device_count(),
                                                                                        args.no_cuda, device))
 
-        if use_cuda and torch.cuda.device_count() > 1:
+        if use_cuda and torch.cuda.device_count() > 1 and args.run_parallel:
             model = nn.DataParallel(model)
             model_parallel = True
         else:
@@ -314,7 +316,7 @@ class Fastsurfer_inference(ChrisApp):
         use_cuda = not args.no_cuda and torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
 
-        if use_cuda and torch.cuda.device_count() > 1:
+        if use_cuda and torch.cuda.device_count() > 1 and args.run_parallel:
             model = nn.DataParallel(model)
             model_parallel = True
         else:
@@ -377,7 +379,7 @@ class Fastsurfer_inference(ChrisApp):
         use_cuda = not args.no_cuda and torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
 
-        if use_cuda and torch.cuda.device_count() > 1:
+        if use_cuda and torch.cuda.device_count() > 1 and args.run_parallel:
             model = nn.DataParallel(model)
             model_parallel = True
         else:
