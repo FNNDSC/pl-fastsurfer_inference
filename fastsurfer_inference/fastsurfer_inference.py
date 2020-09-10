@@ -169,7 +169,7 @@ class Fastsurfer_inference(ChrisApp):
         """
         # Requiered options
         # 1. Directory information (where to read from, where to write to)
-        self.add_argument('--csv_file', dest='csv_file',type = str,optional = False, help="CSV-file with directories to process", default=None)
+        self.add_argument('--csv_file', dest='csv_file',type = str,optional = True, help="CSV-file with directories to process", default="")
 
         # 2. Options for the MRI volumes (name of in and output, order of interpolation if not conformed)
         self.add_argument('--in_name', '--input_name',type = str, dest='iname', help='name of file to process. Default: brain.mgz',optional = True,
@@ -201,9 +201,9 @@ class Fastsurfer_inference(ChrisApp):
 
         # 5. Clean up and GPU/CPU options (disable cuda, change batchsize)
         self.add_argument('--clean', dest='cleanup',type = str,optional = False, help="Flag to clean up segmentation", action='store_true')
-        self.add_argument('--no_cuda',dest = 'no_cuda' ,action='store_true',type = str,optional = True, default=False, help='disables CUDA training')
+        self.add_argument('--no_cuda',dest = 'no_cuda' ,action='store_true',type = bool,optional = True, default=False, help='disables CUDA training')
         self.add_argument('--batch_size',dest = 'batch_size', type=int, default=8,optional = True, help="Batch size for inference. Default: 8")
-        self.add_argument('--simple_run', dest = 'simple_run', action='store_true',optional = True, default=False,type = str,
+        self.add_argument('--simple_run', dest = 'simple_run', action='store_true',optional = True, default=False,type = bool,
                       help='Simplified run: only analyse one given image specified by --in_name (output: --out_name). '
                            'Need to specify absolute path to both --in_name and --out_name if this option is chosen.')
         # Adding check to parallel processing, default = false
@@ -555,7 +555,7 @@ class Fastsurfer_inference(ChrisApp):
         else:
 
             # Prepare subject list to be processed
-            if options.csv_file is not None:
+            if options.csv_file is not "":
                 with open(options.csv_file, "r") as s_dirs:
                     subject_directories = [line.strip() for line in s_dirs.readlines()]
 
