@@ -182,7 +182,7 @@ class Fastsurfer_inference(ChrisApp):
                       help="order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)")
 
         # 3. Options for log-file and search-tag
-        self.add_argument('-t', '--tag', dest='search_tag',type = str, default="*",optional = True,
+        self.add_argument('--tag', '-t', dest='search_tag',type = str, default="*",optional = True,
                       help='Search tag to process only certain subjects. If a single image should be analyzed, set the '
                            'tag with its id. Default: processes all.')
         self.add_argument('--log', dest='logfile',type = str,optional = True, help='name of log-file. Default: deep-seg.log',
