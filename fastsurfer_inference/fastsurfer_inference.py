@@ -200,7 +200,7 @@ class Fastsurfer_inference(ChrisApp):
                       default='../checkpoints/Axial_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
 
         # 5. Clean up and GPU/CPU options (disable cuda, change batchsize)
-        self.add_argument('--clean', dest='cleanup',type = str,optional = False, help="Flag to clean up segmentation", action='store_true')
+        self.add_argument('--clean', dest='cleanup',type = bool, optional = True, default = True, help="Flag to clean up segmentation", action='store_true')
         self.add_argument('--no_cuda',dest = 'no_cuda' ,action='store_true',type = bool,optional = True, default=False, help='disables CUDA training')
         self.add_argument('--batch_size',dest = 'batch_size', type=int, default=8,optional = True, help="Batch size for inference. Default: 8")
         self.add_argument('--simple_run', dest = 'simple_run', action='store_true',optional = True, default=False,type = bool,
