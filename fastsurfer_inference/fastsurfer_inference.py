@@ -147,7 +147,7 @@ class Fastsurfer_inference(ChrisApp):
     MAX_MEMORY_LIMIT        = '' # Override with string, e.g. '1Gi', '2000Mi'
     MIN_MEMORY_LIMIT        = '' # Override with string, e.g. '1Gi', '2000Mi'
     MIN_GPU_LIMIT           = 0  # Override with the minimum number of GPUs, as an integer, for your plugin
-    MAX_GPU_LIMIT           = 1  # Override with the maximum number of GPUs, as an integer, for your plugin
+    MAX_GPU_LIMIT           = 0  # Override with the maximum number of GPUs, as an integer, for your plugin
 
     # Use this dictionary structure to provide key-value output descriptive information
     # that may be useful for the next downstream plugin. For example:
