@@ -556,7 +556,7 @@ class Fastsurfer_inference(ChrisApp):
 
             # Prepare subject list to be processed
             if options.multi is not "":
-                search_path = op.join(options.inputdir, options.multi)
+                search_path = op.join(options.inputdir, options.multi,options.search_tag)
                 subject_directories = glob.glob(search_path)
 
             else:
