@@ -169,7 +169,7 @@ class Fastsurfer_inference(ChrisApp):
         """
         # Requiered options
         # 1. Directory information (where to read from, where to write to)
-        self.add_argument('--csv_file', dest='csv_file',type = str,optional = True, help="CSV-file with directories to process", default="")
+        self.add_argument('--multi', dest='multi',type = str,optional = True, help="Directory containing multiple subjects", default="")
 
         # 2. Options for the MRI volumes (name of in and output, order of interpolation if not conformed)
         self.add_argument('--in_name', '--input_name',type = str, dest='iname', help='name of file to process. Default: brain.mgz',optional = True,
@@ -555,9 +555,9 @@ class Fastsurfer_inference(ChrisApp):
         else:
 
             # Prepare subject list to be processed
-            if options.csv_file is not "":
-                with open(options.csv_file, "r") as s_dirs:
-                    subject_directories = [line.strip() for line in s_dirs.readlines()]
+            if options.multi is not "":
+                search_path = op.join(options.inputdir, options.multi)
+                subject_directories = glob.glob(search_path)
 
             else:
                 search_path = op.join(options.inputdir, options.search_tag)
