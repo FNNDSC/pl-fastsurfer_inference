@@ -572,18 +572,11 @@ class Fastsurfer_inference(ChrisApp):
                 subject = current_subject.split("/")[-1]
 
                 # Define volume to process, log-file and name under which final prediction will be saved
-                if options.csv_file:
+                
 
-                    dataset = current_subject.split("/")[-2]
-                    invol = op.join(current_subject, options.iname)
-                    logfile = op.join(options.output, dataset, subject, options.logfile)
-                    save_file_name = op.join(options.output, dataset, subject, options.oname)
-
-                else:
-
-                    invol = op.join(current_subject, options.iname)
-                    logfile = op.join(options.outputdir, subject, options.logfile)
-                    save_file_name = op.join(options.outputdir, subject, options.oname)
+                invol = op.join(current_subject, options.iname)
+                logfile = op.join(options.outputdir, subject, options.logfile)
+                save_file_name = op.join(options.outputdir, subject, options.oname)
 
                 logger.info("Running Fast Surfer on {}".format(subject))
 
