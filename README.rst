@@ -178,6 +178,7 @@ Now, prefix all calls with
 
     docker run --rm -v $(pwd)/out:/outgoing                             \
             fnndsc/pl-fastsurfer_inference fastsurfer_inference.py                        \
+            --tag . /incoming /outgoing
 
 Thus, getting inline help is:
 
