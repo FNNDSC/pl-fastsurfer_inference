@@ -1,4 +1,4 @@
-#!/usr/bin/env python                                            
+#!/usr/bin/env python
 #
 # fastsurfer_inference ds ChRIS plugin app
 #
@@ -51,19 +51,20 @@ from chrisapp.base import ChrisApp
 
 
 Gstr_title = """
- / _|        | |                 / _|        (_)      / _|                            
-| |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___ 
-|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \
+   _          _                    _          _         _
+ / _|        | |                 / _|        (_)      / _|
+| |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___
+|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \ 
 | || (_| \__ \ |_\__ \ |_| | |  | ||  __/ |  | | | | | ||  __/ | |  __/ | | | (_|  __/
 |_| \__,_|___/\__|___/\__,_|_|  |_| \___|_|  |_|_| |_|_| \___|_|  \___|_| |_|\___\___|
-                                        ______                                        
-                                       |______|    
-    
+                                        ______
+                                       |______|
+
 """
 
 Gstr_synopsis = """
 
-(Edit this in-line help for app specifics. At a minimum, the 
+(Edit this in-line help for app specifics. At a minimum, the
 flags below are supported -- in the case of DS apps, both
 positional arguments <inputDir> and <outputDir>; for FS apps
 only <outputDir> -- and similarly for <in> <out> directories
@@ -71,7 +72,7 @@ where necessary.)
 
     NAME
 
-       fastsurfer_inference.py 
+       fastsurfer_inference.py
 
     SYNOPSIS
 
@@ -84,7 +85,7 @@ where necessary.)
             [-v <level>] [--verbosity <level>]                          \\
             [--version]                                                 \\
             <inputDir>                                                  \\
-            <outputDir> 
+            <outputDir>
 
     BRIEF EXAMPLE
 
@@ -102,24 +103,24 @@ where necessary.)
 
         [-h] [--help]
         If specified, show help message and exit.
-        
+
         [--json]
         If specified, show json representation of app and exit.
-        
+
         [--man]
         If specified, print (this) man page and exit.
 
         [--meta]
         If specified, print plugin meta data and exit.
-        
-        [--savejson <DIR>] 
-        If specified, save json representation file to DIR and exit. 
-        
+
+        [--savejson <DIR>]
+        If specified, save json representation file to DIR and exit.
+
         [-v <level>] [--verbosity <level>]
         Verbosity level for app. Not used currently.
-        
+
         [--version]
-        If specified, print version number and exit. 
+        If specified, print version number and exit.
 
 """
 
@@ -137,7 +138,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '0.1'
+    VERSION                 = '0.99'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -234,7 +235,7 @@ class Fastsurfer_inference(ChrisApp):
         test_dataset_coronal = OrigDataThickSlices(img_filename, orig_data, transforms=transform_test, plane='Coronal')
 
         start = time.time()
-    
+
         test_data_loader = DataLoader(dataset=test_dataset_axial, batch_size=args.batch_size, shuffle=False)
 
         # Axial View Testing
@@ -572,7 +573,7 @@ class Fastsurfer_inference(ChrisApp):
                 subject = current_subject.split("/")[-1]
 
                 # Define volume to process, log-file and name under which final prediction will be saved
-                
+
 
                 invol = op.join(current_subject, options.iname)
                 logfile = op.join(options.outputdir, subject, options.logfile)
