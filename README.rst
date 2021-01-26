@@ -192,14 +192,15 @@ This is just a quick and dirty way to get the plug-in working. Remember, the inp
 .. code:: bash
 
    -> inputdir
-       -> Subject1
-          -> brain.mgz
-       -> Subject2
-       -> Subject3
-       .
-       .
-       .
-       -> SubjectN
+       -> Subjects
+           -> Subject1
+              -> brain.mgz
+           -> Subject2
+           -> Subject3
+           .
+           .
+           .
+           -> SubjectN
        
        
 Running the plug-in on GPU
