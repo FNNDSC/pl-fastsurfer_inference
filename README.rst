@@ -16,7 +16,26 @@ pl-fastsurfer_inference
 Abstract
 --------
 
+<<<<<<< HEAD
 ``pl-fastsurfer_inference`` is a ChRIS DS app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images. It relies upon and uses the FastSurfer engine of Martin Reuter, available at https://www.sciencedirect.com/science/article/pii/S1053811920304985.
+=======
+An app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images
+
+N.B. This plug-in is a GPU efficient plug-in. It takes <1 minute to complete inference on a single brain.mgz file.
+     In case a GPU is not available, a system with minimum 24GB RAM is required to run this plug-in. It takes about 90 minutes to complete inference on
+     one subject on a CPU
+
+Citations
+---------
+
+This plug-in uses the FastSurfer application built by Leonie Henschel, Sailesh Conjeti, Santiago Estrada, Kersten Diers, Bruce Fischl & Martin Reuter
+
+The link to the publication can be found here : https://www.sciencedirect.com/science/article/pii/S1053811920304985
+
+The source code of FastSurfer is available on Github: https://github.com/Deep-MI/FastSurfer.
+
+
+>>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 
 Synopsis
 --------
@@ -28,6 +47,22 @@ Synopsis
         [--version]                                                 \
         [--man]                                                     \
         [--meta]                                                    \
+        [--multi <dir containing mgz files of multiple subjects>]   \
+        [--in_name <name of the i/p mgz file>]                      \
+        [--out_name <name of the o/p segmented mgz file>]           \
+        [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
+        [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
+                           'tag with its id. Default: processes all.'>]\
+        [--log <name of the log file>]                              \
+        [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
+        [--network_coronal_path <pre-trained weights of coronal network>] \
+        [--network_axial_path <pre-trained weights of axial network>] \
+        [--clean]                                                    \
+        [--no_cuda]                                                  \
+        [--batch_size <Batch size for inference. Default: 8>]        \
+        [--simple_run]                                               \
+        [--run_parallel]                                             \
+        [--copyInputImage]                                           \
         <inputDir>
         <outputDir>
 
@@ -50,6 +85,51 @@ Arguments
 ---------
 
 .. code::
+    
+    [--multi <dir containing mgz files of multiple subjects>]   \
+    If this argument is selected then the plug-in can process multiple subjects sequentially in a single run.
+    
+    [--in_name <name of the i/p mgz file>]                      \
+    The name of the raw .mgz file of a subject. The default value is brain.mgz
+    
+    [--out_name <name of the o/p segmented mgz file>]           \
+    The name of the o/p or segmented mgz file. Default name is aparc.DKTatlas+aseg.deep.mgz
+    If a separate subfolder is desired (e.g. FS conform, add it to the name: '
+                           'mri/aparc.DKTatlas+aseg.deep.mgz)')
+    
+    [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
+    
+    [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
+                           'tag with its id. Default: processes all.'>]\
+                           
+    [--log <name of the log file>]                              \
+    The name of the log file containing inference info. Default value is `deep-seg.log`
+    
+    [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
+    The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+    
+    [--network_coronal_path <pre-trained weights of coronal network>] \
+    The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+    
+    [--network_axial_path <pre-trained weights of axial network>] \
+    The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+    
+    [--clean] \
+    Flag to clean up segmentation
+    
+    [--no_cuda] \
+    The plug-in uses CPU for computation if this argument is specified. Approximate time taken is 1:30 hrs per subject
+    
+    [--batch_size <Batch size for inference. Default: 8>] \
+    
+    [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
+    Need to specify absolute path to both --in_name and --out_name if this option is chosen.
+    
+    [--run_parallel]                \
+    If specified and multiple GPUs exists, inference runs parallely on multiple GPUs. Default mode is false
+    
+    [--copyInputImage]
+    If specified, copies input mgz file to o/p dir. Default value is false
 
     [-v <level>] [--verbosity <level>]
     Verbosity level for app. Not used currently.
@@ -118,11 +198,16 @@ Thus, getting inline help is:
 Examples
 --------
 
+<<<<<<< HEAD
 This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure
+=======
+This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure for `--multi` feature to work
+>>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 
 .. code:: bash
 
    -> inputdir
+<<<<<<< HEAD
        -> Subject1
           -> brain.mgz
        -> Subject2
@@ -133,6 +218,19 @@ This is just a quick and dirty way to get the plug-in working. Remember, the inp
        -> SubjectN
 
 
+=======
+       -> Subjects
+           -> Subject1
+              -> brain.mgz
+           -> Subject2
+           -> Subject3
+           .
+           .
+           .
+           -> SubjectN
+       
+       
+>>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 Running the plug-in on GPU
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

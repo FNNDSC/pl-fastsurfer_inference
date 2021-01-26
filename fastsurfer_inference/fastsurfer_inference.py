@@ -9,6 +9,21 @@
 #                        dev@babyMRI.org
 #
 
+# Copyright 2019 Image Analysis Lab, German Center for Neurodegenerative Diseases (DZNE), Bonn
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 
 # IMPORTS
 import optparse
@@ -51,6 +66,7 @@ from chrisapp.base import ChrisApp
 
 
 Gstr_title = """
+<<<<<<< HEAD
    _          _                    _          _         _
  / _|        | |                 / _|        (_)      / _|
 | |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___
@@ -60,6 +76,18 @@ Gstr_title = """
                                         ______
                                        |______|
 
+=======
+
+  __          _                   __          _        __                             
+ / _|        | |                 / _|        (_)      / _|                            
+| |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___ 
+|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \
+| || (_| \__ \ |_\__ \ |_| | |  | ||  __/ |  | | | | | ||  __/ | |  __/ | | | (_|  __/
+|_| \__,_|___/\__|___/\__,_|_|  |_| \___|_|  |_|_| |_|_| \___|_|  \___|_| |_|\___\___|
+                                        ______                                        
+                                       |______|                                       
+    
+>>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 """
 
 Gstr_synopsis = """
@@ -77,6 +105,7 @@ where necessary.)
     SYNOPSIS
 
         python fastsurfer_inference.py                                         \\
+<<<<<<< HEAD
             [-h] [--help]                                               \\
             [--json]                                                    \\
             [--man]                                                     \\
@@ -87,6 +116,31 @@ where necessary.)
             <inputDir>                                                  \\
             <outputDir>
 
+=======
+            [[-v <level>] [--verbosity <level>]                          \
+            [--version]                                                 \
+            [--man]                                                     \
+            [--meta]                                                    \
+            [--multi <dir containing mgz files of multiple subjects>]   \
+            [--in_name <name of the i/p mgz file>]                      \
+            [--out_name <name of the o/p segmented mgz file>]           \
+            [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
+            [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
+                       'tag with its id. Default: processes all.'>]\
+            [--log <name of the log file>]                              \
+            [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
+            [--network_coronal_path <pre-trained weights of coronal network>] \
+            [--network_axial_path <pre-trained weights of axial network>] \
+            [--clean ]                                                    \
+            [--no_cuda ]                                                  \
+            [--batch_size <Batch size for inference. Default: 8>]         \
+            [--simple_run ]                                               \
+            [--run_parallel]                                              \
+            [--copyInputImage]                                            \
+            <inputDir>
+            <outputDir>
+            
+>>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
     BRIEF EXAMPLE
 
         * Bare bones execution
@@ -101,6 +155,7 @@ where necessary.)
 
     ARGS
 
+<<<<<<< HEAD
         [-h] [--help]
         If specified, show help message and exit.
 
@@ -115,12 +170,67 @@ where necessary.)
 
         [--savejson <DIR>]
         If specified, save json representation file to DIR and exit.
+=======
+        [--multi <dir containing mgz files of multiple subjects>]   \
+        If this argument is selected then the plug-in can process multiple subjects sequentially in a single run.
+
+        [--in_name <name of the i/p mgz file>]                      \
+        The name of the raw .mgz file of a subject. The default value is brain.mgz
+
+        [--out_name <name of the o/p segmented mgz file>]           \
+        The name of the o/p or segmented mgz file. Default name is aparc.DKTatlas+aseg.deep.mgz
+        If a separate subfolder is desired (e.g. FS conform, add it to the name: '
+                       'mri/aparc.DKTatlas+aseg.deep.mgz)')
+
+        [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
+
+        [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
+                       'tag with its id. Default: processes all.'>]\
+
+        [--log <name of the log file>]                              \
+        The name of the log file containing inference info. Default value is `deep-seg.log`
+
+        [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
+        The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+
+        [--network_coronal_path <pre-trained weights of coronal network>] \
+        The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+
+        [--network_axial_path <pre-trained weights of axial network>] \
+        The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+
+        [--clean <Flag to clean up segmentation>] \
+
+        [--no_cuda <disable CUDA training>] \
+        The plug-in uses CPU for computation if this argument is specified. Approximate time taken is 1:30 hrs per subject
+
+        [--batch_size <Batch size for inference. Default: 8>] \
+
+        [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
+        Need to specify absolute path to both --in_name and --out_name if this option is chosen.
+
+        [--run_parallel <If multiple GPU is present, enable parallel computation on multiple GPUS>]                \
+        If specified and multiple GPUs exists, inference runs parallely on multiple GPUs. Default mode is false
+        
+        [--copyInputImage]                                                                                         \
+        If specified, copies the input volume to output dir.
+>>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 
         [-v <level>] [--verbosity <level>]
         Verbosity level for app. Not used currently.
 
         [--version]
+<<<<<<< HEAD
         If specified, print version number and exit.
+=======
+        If specified, print version number.
+
+        [--man]
+        If specified, print (this) man page.
+
+        [--meta]
+        If specified, print plugin meta data. 
+>>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 
 """
 
@@ -129,7 +239,7 @@ class Fastsurfer_inference(ChrisApp):
     """
     An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images.
     """
-    AUTHORS                 = 'Sandip Samal (sandip.samal@childrens.harvard.edu)'
+    AUTHORS                 = 'Martin Reuter(Developer of FastSurfer), Sandip Samal(Converted FastSurfer into a ChRIS pligin) (sandip.samal@childrens.harvard.edu)'
     SELFPATH                = os.path.dirname(os.path.abspath(__file__))
     SELFEXEC                = os.path.basename(__file__)
     EXECSHELL               = 'python3'
@@ -209,7 +319,10 @@ class Fastsurfer_inference(ChrisApp):
                            'Need to specify absolute path to both --in_name and --out_name if this option is chosen.')
         # Adding check to parallel processing, default = false
         self.add_argument('--run_parallel',dest = 'run_parallel', type= bool, action = 'store_true', optional = True , default = False, help = 'Enables parallel processing. Default mode : FALSE')
+        
+        self.add_argument('--copyInputImage',dest = 'copyImage',action ='store_true', type=bool, default=False,optional = True, help="Copies input file to output dir.")
     def fast_surfer_cnn(self,img_filename, save_as, logger, args):
+        
         """
         Cortical parcellation of single image
         :param str img_filename: name of image file
@@ -227,6 +340,12 @@ class Fastsurfer_inference(ChrisApp):
         logger.info("Reading volume {}".format(img_filename))
 
         header_info, affine_info, orig_data = load_and_conform_image(img_filename, interpol=args.order)
+        
+        if args.copyImage:
+            mgz_file = nib.load(img_filename)
+            out_path = save_as.replace(args.oname,args.iname)
+            logger.info("Copying volume to {}".format(out_path))
+            mgz_file.to_filename(out_path)
 
         transform_test = transforms.Compose([ToTensorTest()])
 
@@ -524,6 +643,7 @@ class Fastsurfer_inference(ChrisApp):
         header_info.set_data_dtype(np.int16)
         mapped_aseg_img = nib.MGHImage(prediction_image, affine_info, header_info)
         mapped_aseg_img.to_filename(save_as)
+        
         logger.info("Saving Segmentation to {}".format(save_as))
         logger.info("Total processing time: {:0.4f} seconds.".format(time.time() - start_total))
 
@@ -556,7 +676,7 @@ class Fastsurfer_inference(ChrisApp):
         else:
 
             # Prepare subject list to be processed
-            if options.multi is not "":
+            if options.multi != "":
                 search_path = op.join(options.inputdir, options.multi,options.search_tag)
                 subject_directories = glob.glob(search_path)
 
@@ -578,6 +698,7 @@ class Fastsurfer_inference(ChrisApp):
                 invol = op.join(current_subject, options.iname)
                 logfile = op.join(options.outputdir, subject, options.logfile)
                 save_file_name = op.join(options.outputdir, subject, options.oname)
+                
 
                 logger.info("Running Fast Surfer on {}".format(subject))
 
