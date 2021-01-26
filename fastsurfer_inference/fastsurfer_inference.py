@@ -107,11 +107,12 @@ where necessary.)
             [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
             [--network_coronal_path <pre-trained weights of coronal network>] \
             [--network_axial_path <pre-trained weights of axial network>] \
-            [--clean <Flag to clean up segmentation>] \
-            [--no_cuda <disable CUDA training>] \
-            [--batch_size <Batch size for inference. Default: 8>] \
-            [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
-            [--run_parallel <If multiple GPU is present, enable parallel computation on multiple GPUS>]                \
+            [--clean ]                                                    \
+            [--no_cuda ]                                                  \
+            [--batch_size <Batch size for inference. Default: 8>]         \
+            [--simple_run ]                                               \
+            [--run_parallel]                                              \
+            [--copyInputImage]                                            \
             <inputDir>
             <outputDir>
             
@@ -169,6 +170,9 @@ where necessary.)
 
         [--run_parallel <If multiple GPU is present, enable parallel computation on multiple GPUS>]                \
         If specified and multiple GPUs exists, inference runs parallely on multiple GPUs. Default mode is false
+        
+        [--copyInputImage]                                                                                         \
+        If specified, copies the input volume to output dir.
 
         [-v <level>] [--verbosity <level>]
         Verbosity level for app. Not used currently.
@@ -269,7 +273,10 @@ class Fastsurfer_inference(ChrisApp):
                            'Need to specify absolute path to both --in_name and --out_name if this option is chosen.')
         # Adding check to parallel processing, default = false
         self.add_argument('--run_parallel',dest = 'run_parallel', type= bool, action = 'store_true', optional = True , default = False, help = 'Enables parallel processing. Default mode : FALSE')
+        
+        self.add_argument('--copyInputImage',dest = 'copyImage',action ='store_true', type=bool, default=False,optional = True, help="Copies input file to output dir.")
     def fast_surfer_cnn(self,img_filename, save_as, logger, args):
+        
         """
         Cortical parcellation of single image
         :param str img_filename: name of image file
@@ -287,6 +294,12 @@ class Fastsurfer_inference(ChrisApp):
         logger.info("Reading volume {}".format(img_filename))
 
         header_info, affine_info, orig_data = load_and_conform_image(img_filename, interpol=args.order)
+        
+        if args.copyImage:
+            mgz_file = nib.load(img_filename)
+            out_path = save_as.replace(args.oname,args.iname)
+            logger.info("Copying volume to {}".format(out_path))
+            mgz_file.to_filename(out_path)
 
         transform_test = transforms.Compose([ToTensorTest()])
 
@@ -584,6 +597,7 @@ class Fastsurfer_inference(ChrisApp):
         header_info.set_data_dtype(np.int16)
         mapped_aseg_img = nib.MGHImage(prediction_image, affine_info, header_info)
         mapped_aseg_img.to_filename(save_as)
+        
         logger.info("Saving Segmentation to {}".format(save_as))
         logger.info("Total processing time: {:0.4f} seconds.".format(time.time() - start_total))
 
@@ -616,7 +630,7 @@ class Fastsurfer_inference(ChrisApp):
         else:
 
             # Prepare subject list to be processed
-            if options.multi is not "":
+            if options.multi != "":
                 search_path = op.join(options.inputdir, options.multi,options.search_tag)
                 subject_directories = glob.glob(search_path)
 
@@ -638,6 +652,7 @@ class Fastsurfer_inference(ChrisApp):
                 invol = op.join(current_subject, options.iname)
                 logfile = op.join(options.outputdir, subject, options.logfile)
                 save_file_name = op.join(options.outputdir, subject, options.oname)
+                
 
                 logger.info("Running Fast Surfer on {}".format(subject))
 
