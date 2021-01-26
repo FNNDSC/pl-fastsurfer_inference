@@ -29,6 +29,21 @@ Synopsis
         [--version]                                                 \
         [--man]                                                     \
         [--meta]                                                    \
+        [--multi <dir containing mgz files of multiple subjects>]   \
+        [--in_name <name of the i/p mgz file>]                      \
+        [--out_name <name of the o/p segmented mgz file>]           \
+        [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
+        [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
+                           'tag with its id. Default: processes all.'>]\
+        [--log <name of the log file>]                              \
+        [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
+        [--network_coronal_path <pre-trained weights of coronal network>] \
+        [--network_axial_path <pre-trained weights of axial network>] \
+        [--clean <Flag to clean up segmentation>] \
+        [--no_cuda <disable CUDA training>] \
+        [--batch_size <Batch size for inference. Default: 8>] \
+        [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
+        [--run_parallel <If multiple GPU is present, enable parallel computation on multiple GPUS>]                \
         <inputDir>
         <outputDir> 
 
@@ -117,7 +132,7 @@ Thus, getting inline help is:
 Examples
 --------
 
-This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure 
+This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure for `--multi` feature to work
 
 .. code:: bash
 
