@@ -53,11 +53,12 @@ Synopsis
         [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
         [--network_coronal_path <pre-trained weights of coronal network>] \
         [--network_axial_path <pre-trained weights of axial network>] \
-        [--clean <Flag to clean up segmentation>] \
-        [--no_cuda <disable CUDA training>] \
-        [--batch_size <Batch size for inference. Default: 8>] \
-        [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
-        [--run_parallel <If multiple GPU is present, enable parallel computation on multiple GPUS>]                \
+        [--clean]                                                    \
+        [--no_cuda]                                                  \
+        [--batch_size <Batch size for inference. Default: 8>]        \
+        [--simple_run]                                               \
+        [--run_parallel]                                             \
+        [--copyInputImage]                                           \
         <inputDir>
         <outputDir> 
 
@@ -109,9 +110,10 @@ Arguments
     [--network_axial_path <pre-trained weights of axial network>] \
     The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
     
-    [--clean <Flag to clean up segmentation>] \
+    [--clean] \
+    Flag to clean up segmentation
     
-    [--no_cuda <disable CUDA training>] \
+    [--no_cuda] \
     The plug-in uses CPU for computation if this argument is specified. Approximate time taken is 1:30 hrs per subject
     
     [--batch_size <Batch size for inference. Default: 8>] \
@@ -119,8 +121,11 @@ Arguments
     [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
     Need to specify absolute path to both --in_name and --out_name if this option is chosen.
     
-    [--run_parallel <If multiple GPU is present, enable parallel computation on multiple GPUS>]                \
+    [--run_parallel]                \
     If specified and multiple GPUs exists, inference runs parallely on multiple GPUs. Default mode is false
+    
+    [--copyInputImage]
+    If specified, copies input mgz file to o/p dir. Default value is false
 
     [-v <level>] [--verbosity <level>]
     Verbosity level for app. Not used currently.
