@@ -18,6 +18,10 @@ Abstract
 
 An app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images
 
+N.B. This plug-in is a GPU efficient plug-in. It takes <1 minute to complete inference on a single brain.mgz file.In case a GPU is 
+     available, a system with minimum 24GB RAM is required to run this plug-in. It takes about 90 minutes to complete inference on
+     one subject on a CPU
+
 Citations
 ---------
 
