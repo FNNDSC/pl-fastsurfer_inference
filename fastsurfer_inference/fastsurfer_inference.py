@@ -70,7 +70,7 @@ Gstr_title = """
   __          _                   __          _        __                             
  / _|        | |                 / _|        (_)      / _|                            
 | |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___ 
-|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \
+|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \ 
 | || (_| \__ \ |_\__ \ |_| | |  | ||  __/ |  | | | | | ||  __/ | |  __/ | | | (_|  __/
 |_| \__,_|___/\__|___/\__,_|_|  |_| \___|_|  |_|_| |_|_| \___|_|  \___|_| |_|\___\___|
                                         ______                                        
@@ -80,12 +80,6 @@ Gstr_title = """
 
 Gstr_synopsis = """
 
-(Edit this in-line help for app specifics. At a minimum, the 
-flags below are supported -- in the case of DS apps, both
-positional arguments <inputDir> and <outputDir>; for FS apps
-only <outputDir> -- and similarly for <in> <out> directories
-where necessary.)
-
     NAME
 
        fastsurfer_inference.py 
@@ -93,26 +87,26 @@ where necessary.)
     SYNOPSIS
 
         python fastsurfer_inference.py                                         \\
-            [[-v <level>] [--verbosity <level>]                          \
-            [--version]                                                 \
-            [--man]                                                     \
-            [--meta]                                                    \
-            [--multi <dir containing mgz files of multiple subjects>]   \
-            [--in_name <name of the i/p mgz file>]                      \
-            [--out_name <name of the o/p segmented mgz file>]           \
-            [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
+            [[-v <level>] [--verbosity <level>]                          \\
+            [--version]                                                 \\
+            [--man]                                                     \\
+            [--meta]                                                    \\
+            [--multi <dir containing mgz files of multiple subjects>]   \\
+            [--in_name <name of the i/p mgz file>]                      \\
+            [--out_name <name of the o/p segmented mgz file>]           \\
+            [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \\
             [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
-                       'tag with its id. Default: processes all.'>]\
-            [--log <name of the log file>]                              \
-            [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
-            [--network_coronal_path <pre-trained weights of coronal network>] \
-            [--network_axial_path <pre-trained weights of axial network>] \
-            [--clean ]                                                    \
-            [--no_cuda ]                                                  \
-            [--batch_size <Batch size for inference. Default: 8>]         \
-            [--simple_run ]                                               \
-            [--run_parallel]                                              \
-            [--copyInputImage]                                            \
+                       'tag with its id. Default: processes all.'>]\\
+            [--log <name of the log file>]                              \\
+            [--network_sagittal_path <path to pre-trained weights of sagittal network>] \\
+            [--network_coronal_path <pre-trained weights of coronal network>] \\
+            [--network_axial_path <pre-trained weights of axial network>] \\
+            [--clean ]                                                    \\
+            [--no_cuda ]                                                  \\
+            [--batch_size <Batch size for inference. Default: 8>]         \\
+            [--simple_run ]                                               \\
+            [--run_parallel]                                              \\
+            [--copyInputImage]                                            \\
             <inputDir>
             <outputDir>
             
@@ -121,7 +115,7 @@ where necessary.)
         * Bare bones execution
 
             mkdir in out && chmod 777 out
-            python fastsurfer_inference.py   \\
+            python fastsurfer_inference.py --tag .   \\
                                 in    out
 
     DESCRIPTION
