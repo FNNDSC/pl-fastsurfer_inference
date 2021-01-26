@@ -21,8 +21,8 @@ setup(
       name             =   'fastsurfer_inference',
       # for best practices make this version the same as the VERSION class variable
       # defined in your ChrisApp-derived Python class
-      version          =   '0.1',
-      description      =   'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images',
+      version          =   '0.99',
+      description      =   'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images using the "fastsurfer" engine of Martin Reuter',
       long_description =   readme(),
       author           =   'Sandip Samal',
       author_email     =   'sandip.samal@childrens.harvard.edu',
