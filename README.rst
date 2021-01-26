@@ -22,6 +22,7 @@ Citations
 ---------
 
 This plug-in uses the FastSurfer application built by Leonie Henschel, Sailesh Conjeti, Santiago Estrada, Kersten Diers, Bruce Fischl & Martin Reuter
+
 The link to the publication can be found here : https://www.sciencedirect.com/science/article/pii/S1053811920304985
 
 The source code of FastSurfer is available on Github: https://github.com/Deep-MI/FastSurfer.
