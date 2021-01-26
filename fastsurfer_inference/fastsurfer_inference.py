@@ -174,7 +174,7 @@ class Fastsurfer_inference(ChrisApp):
     """
     An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images.
     """
-    AUTHORS                 = 'Sandip Samal (sandip.samal@childrens.harvard.edu)'
+    AUTHORS                 = 'Martin Reuter(Developer of FastSurfer), Sandip Samal(Converted FastSurfer into a ChRIS pligin) (sandip.samal@childrens.harvard.edu)'
     SELFPATH                = os.path.dirname(os.path.abspath(__file__))
     SELFEXEC                = os.path.basename(__file__)
     EXECSHELL               = 'python3'
