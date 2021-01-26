@@ -16,21 +16,20 @@ pl-fastsurfer_inference
 Abstract
 --------
 
-An app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images
-
+``pl-fastsurfer_inference`` is a ChRIS DS app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images. It relies upon and uses the FastSurfer engine of Martin Reuter, available at https://www.sciencedirect.com/science/article/pii/S1053811920304985.
 
 Synopsis
 --------
 
 .. code::
 
-    python fastsurfer_inference.py                                           \
+    python fastsurfer_inference.py                                  \
         [-v <level>] [--verbosity <level>]                          \
         [--version]                                                 \
         [--man]                                                     \
         [--meta]                                                    \
         <inputDir>
-        <outputDir> 
+        <outputDir>
 
 Description
 -----------
@@ -56,8 +55,8 @@ Arguments
     Verbosity level for app. Not used currently.
 
     [--version]
-    If specified, print version number. 
-    
+    If specified, print version number.
+
     [--man]
     If specified, print (this) man page.
 
@@ -73,7 +72,7 @@ This ``plugin`` can be run in two modes: natively as a python package or as a co
 Using PyPI
 ~~~~~~~~~~
 
-To run from PyPI, simply do a 
+To run from PyPI, simply do a
 
 .. code:: bash
 
@@ -97,12 +96,13 @@ Using ``docker run``
 
 To run using ``docker``, be sure to assign an "input" directory to ``/incoming`` and an output directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
 
-Now, prefix all calls with 
+Now, prefix all calls with
 
 .. code:: bash
 
     docker run --rm -v $(pwd)/out:/outgoing                             \
-            fnndsc/pl-fastsurfer_inference fastsurfer_inference.py                        \
+            fnndsc/pl-fastsurfer_inference                              \
+            fastsurfer_inference.py                                     \
 
 Thus, getting inline help is:
 
@@ -110,14 +110,15 @@ Thus, getting inline help is:
 
     mkdir in out && chmod 777 out
     docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-            fnndsc/pl-fastsurfer_inference fastsurfer_inference.py                        \
+            fnndsc/pl-fastsurfer_inference                              \
+            fastsurfer_inference.py                                     \
             --man                                                       \
             /incoming /outgoing
 
 Examples
 --------
 
-This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure 
+This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure
 
 .. code:: bash
 
@@ -130,8 +131,8 @@ This is just a quick and dirty way to get the plug-in working. Remember, the inp
        .
        .
        -> SubjectN
-       
-       
+
+
 Running the plug-in on GPU
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -147,7 +148,7 @@ To run using ``docker``, be sure to assign an "input" directory to ``/incoming``
             --t Subject1 --in_name brain.mgz                             \
             /incoming /outgoing
 
-The output file will be saved as /outgoing/Subject1/aparc.DKTatlas+aseg.deep.mgz
+The output file will be saved as ``/outgoing/Subject1/aparc.DKTatlas+aseg.deep.mgz``
 
 
 
