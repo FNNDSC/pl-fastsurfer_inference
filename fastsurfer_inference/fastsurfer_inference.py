@@ -66,8 +66,8 @@ from chrisapp.base import ChrisApp
 
 
 Gstr_title = """
-<<<<<<< HEAD
-   _          _                    _          _         _
+
+  __          _                   __          _        __
  / _|        | |                 / _|        (_)      / _|
 | |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___
 |  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \ 
@@ -76,27 +76,10 @@ Gstr_title = """
                                         ______
                                        |______|
 
-=======
-
-  __          _                   __          _        __                             
- / _|        | |                 / _|        (_)      / _|                            
-| |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___ 
-|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \
-| || (_| \__ \ |_\__ \ |_| | |  | ||  __/ |  | | | | | ||  __/ | |  __/ | | | (_|  __/
-|_| \__,_|___/\__|___/\__,_|_|  |_| \___|_|  |_|_| |_|_| \___|_|  \___|_| |_|\___\___|
-                                        ______                                        
-                                       |______|                                       
-    
->>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 """
 
 Gstr_synopsis = """
 
-(Edit this in-line help for app specifics. At a minimum, the
-flags below are supported -- in the case of DS apps, both
-positional arguments <inputDir> and <outputDir>; for FS apps
-only <outputDir> -- and similarly for <in> <out> directories
-where necessary.)
 
     NAME
 
@@ -104,142 +87,152 @@ where necessary.)
 
     SYNOPSIS
 
-        python fastsurfer_inference.py                                         \\
-<<<<<<< HEAD
-            [-h] [--help]                                               \\
-            [--json]                                                    \\
-            [--man]                                                     \\
-            [--meta]                                                    \\
-            [--savejson <DIR>]                                          \\
-            [-v <level>] [--verbosity <level>]                          \\
-            [--version]                                                 \\
-            <inputDir>                                                  \\
-            <outputDir>
+        python fastsurfer_inference.py                                      \\
+                                    [--subjectDir <subjectDir>]             \\
+                                    [--subject <subjectToProcess>]          \\
+                                    [--in_name <inputFileToProcess>]        \\
+                                    [--out_name <segmentedFile]             \\
+                                    [--order <interpolation>]               \\
+                                    [--log <logFile>]                       \\
+                                    [--clean]                               \\
+                                    [--no_cuda]                             \\
+                                    [--batch_size <batchSizePerInference]   \\
+                                    [--simple_run]                          \\
+                                    [--run_parallel]                        \\
+                                    [--copyInputImage]                      \\
+                                    [-v <level>] [--verbosity <level>]      \\
+                                    [--version]                             \\
+                                    [--man]                                 \\
+                                    [--meta]                                \\
+                                    <inputDir>
+                                    <outputDir>
 
-=======
-            [[-v <level>] [--verbosity <level>]                          \
-            [--version]                                                 \
-            [--man]                                                     \
-            [--meta]                                                    \
-            [--multi <dir containing mgz files of multiple subjects>]   \
-            [--in_name <name of the i/p mgz file>]                      \
-            [--out_name <name of the o/p segmented mgz file>]           \
-            [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
-            [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
-                       'tag with its id. Default: processes all.'>]\
-            [--log <name of the log file>]                              \
-            [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
-            [--network_coronal_path <pre-trained weights of coronal network>] \
-            [--network_axial_path <pre-trained weights of axial network>] \
-            [--clean ]                                                    \
-            [--no_cuda ]                                                  \
-            [--batch_size <Batch size for inference. Default: 8>]         \
-            [--simple_run ]                                               \
-            [--run_parallel]                                              \
-            [--copyInputImage]                                            \
-            <inputDir>
-            <outputDir>
-            
->>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
     BRIEF EXAMPLE
 
-        * Bare bones execution
+        * Bare bones execution:
 
-            mkdir in out && chmod 777 out
-            python fastsurfer_inference.py   \\
-                                in    out
+            Assume that the ``in`` directory contains a single subject
+            ``subdir``, which in turn contains single file, called
+            ``brain.mgz``:
+
+            mkdir out && chmod 777 out
+            docker run --rm                                                 \\
+                        -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \\
+                        fnndsc/pl-fastsurfer_inference                      \\
+                        fastsurfer_inference.py                             \\
+                        /incoming /outgoing
 
     DESCRIPTION
 
-        `fastsurfer_inference.py` ...
+        ``fastsurfer_inference.py`` is a ChRIS plugin constructed around the
+        FastSurfer application developed by the "Deep Medical Imaging Lab"
+        (https://deep-mi.org). For the publication describing this method, see
+
+            Henschel L, Conjeti S, Estrada S, Diers K, Fischl B, Reuter M.
+            "FastSurfer - A fast and accurate deep learning based neuroimaging
+            pipeline." NeuroImage. 2020.
+
+            https://arxiv.org/pdf/2009.04392.pdf
+            https://deep-mi.org/static/pub/ewert_2020.bib
+
+        This specific plugin wraps around many of the FastSurfer CLI in
+        addition to providing ChRIS plugin-specific CLI. It's primary purpose
+        is to segment and input brain image file (in FreeSurfer ``mgz`` format),
+        creating in turn as output a labeled ``mgz`` format file.
 
     ARGS
 
-<<<<<<< HEAD
-        [-h] [--help]
-        If specified, show help message and exit.
+        [--subjectDir <subjectDir>]
+        By default, the <subjectDir> is assumed to be the <inputDir>. However,
+        the <subjectDir> can be nested relative to the <inputDir>, and can thus
+        be specified with this flag.
 
-        [--json]
-        If specified, show json representation of app and exit.
+        The <subjectDir> is assumed by default to contain one level of sub
+        directory, and these sub dirs, considered the ``subjects``, each contain
+        a single ``mgz`` to process.
 
-        [--man]
-        If specified, print (this) man page and exit.
+        [--subject <subjectToProcess>]
+        This can denote a sub-set of subject(s) (i.e. sub directory within the
+        <subjectDir>). The <subjectToProcess> is "globbed", so an expression
+        like ``--subject 10*`` would process all ``subjects`` starting with the
+        text string ``10``. Note to protect from shell expansion of wildcard
+        characters, the argument should be protected in single quotes.
 
-        [--meta]
-        If specified, print plugin meta data and exit.
+        [--in_name <inputFileToProcess>]
+        The name of the raw ``.mgz`` file of a subject. The default value is
+        ``brain.mgz``. The full path to the <inputFileToProcess> is constructed
+        by concatenating
 
-        [--savejson <DIR>]
-        If specified, save json representation file to DIR and exit.
-=======
-        [--multi <dir containing mgz files of multiple subjects>]   \
-        If this argument is selected then the plug-in can process multiple subjects sequentially in a single run.
+                ``<inputDir>/<subjectDir>/<subject>/<inputFileToProcess>``
 
-        [--in_name <name of the i/p mgz file>]                      \
-        The name of the raw .mgz file of a subject. The default value is brain.mgz
+        [--out_name <segmentedFile]
+        The name of the output or segmented ``mgz`` file. Default name is
 
-        [--out_name <name of the o/p segmented mgz file>]           \
-        The name of the o/p or segmented mgz file. Default name is aparc.DKTatlas+aseg.deep.mgz
-        If a separate subfolder is desired (e.g. FS conform, add it to the name: '
-                       'mri/aparc.DKTatlas+aseg.deep.mgz)')
+                            ``aparc.DKTatlas+aseg.deep.mgz``
 
-        [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
+        [--order <interpolation>]
+        The order of interpolation:
 
-        [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
-                       'tag with its id. Default: processes all.'>]\
+                            0 = nearest
+                            1 = linear (default)
+                            2 = quadratic
+                            3 = cubic
 
-        [--log <name of the log file>]                              \
-        The name of the log file containing inference info. Default value is `deep-seg.log`
+        [--log <logFile>]
+        The name of the log file containing inference info. Default value is
 
-        [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
-        The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+                            ``deep-seg.log``
 
-        [--network_coronal_path <pre-trained weights of coronal network>] \
-        The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+        [--clean]
+        If specified, clean the segmentation.
 
-        [--network_axial_path <pre-trained weights of axial network>] \
-        The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
+        [--no_cuda]
+        If specified, run on CPU, not GPU. Depending on CPU/GPU, your apparent
+        mileage will vary, but expect orders longer time than compared to a
+        GPU.
 
-        [--clean <Flag to clean up segmentation>] \
+        For example, in informal testing, GPU takes about a minute per
+        subject, while CPU approximately 1.5 hours per subject!
 
-        [--no_cuda <disable CUDA training>] \
-        The plug-in uses CPU for computation if this argument is specified. Approximate time taken is 1:30 hrs per subject
+        [--batch_size <batchSizePerInference]
+        Batch size per inference. Default is 8.
 
-        [--batch_size <Batch size for inference. Default: 8>] \
+        [--simple_run]
+        Simplified run: only analyse one given image specified by ``--in_name``
+        (output: ``--out_name``). Note that you need to specify absolute path
+        to both ``--in_name`` and ``--out_name`` if this option is chosen.
 
-        [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
-        Need to specify absolute path to both --in_name and --out_name if this option is chosen.
+        [--run_parallel]
+        If multiple GPUs are present to the docker container, enable parallel
+        computation on multiple GPUs with an inference run.
 
-        [--run_parallel <If multiple GPU is present, enable parallel computation on multiple GPUS>]                \
-        If specified and multiple GPUs exists, inference runs parallely on multiple GPUs. Default mode is false
-        
         [--copyInputImage]                                                                                         \
-        If specified, copies the input volume to output dir.
->>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
+        If specified, copies the input volume to output dir. This can be useful
+        to create an easy association between a given input volume and the
+        segmented output.
 
         [-v <level>] [--verbosity <level>]
         Verbosity level for app. Not used currently.
 
         [--version]
-<<<<<<< HEAD
-        If specified, print version number and exit.
-=======
         If specified, print version number.
 
         [--man]
         If specified, print (this) man page.
 
         [--meta]
-        If specified, print plugin meta data. 
->>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
+        If specified, print plugin meta data.
 
 """
 
 
 class Fastsurfer_inference(ChrisApp):
     """
-    An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images.
+    An app to efficiently perform cortical parcellation and segmentation
+    on raw brain MRI images, using FastSurfer developed by the
+    Deep Medical Imaging Lab (https://deep-mi.org).
     """
-    AUTHORS                 = 'Martin Reuter(Developer of FastSurfer), Sandip Samal(Converted FastSurfer into a ChRIS pligin) (sandip.samal@childrens.harvard.edu)'
+    AUTHORS                 = 'Martin Reuter (FastSurfer), Sandip Samal (FNNDSC) (sandip.samal@childrens.harvard.edu)'
     SELFPATH                = os.path.dirname(os.path.abspath(__file__))
     SELFEXEC                = os.path.basename(__file__)
     EXECSHELL               = 'python3'
@@ -280,49 +273,116 @@ class Fastsurfer_inference(ChrisApp):
         """
         # Requiered options
         # 1. Directory information (where to read from, where to write to)
-        self.add_argument('--multi', dest='multi',type = str,optional = True, help="Directory containing multiple subjects", default="")
+        self.add_argument(  '--subjectDir',
+                            dest        = 'multi',
+                            type        = str,
+                            optional    = True,
+                            help        = "directory (relative to <inputDir>) of subjects to process",
+                            default     = "")
 
         # 2. Options for the MRI volumes (name of in and output, order of interpolation if not conformed)
-        self.add_argument('--in_name', '--input_name',type = str, dest='iname', help='name of file to process. Default: brain.mgz',optional = True,
-                      default='brain.mgz')
-        self.add_argument('--out_name', '--output_name', dest='oname',type = str,optional = True, default='aparc.DKTatlas+aseg.deep.mgz',
-                      help='name under which segmentation will be saved. Default: aparc.DKTatlas+aseg.deep.mgz. '
-                           'If a separate subfolder is desired (e.g. FS conform, add it to the name: '
-                           'mri/aparc.DKTatlas+aseg.deep.mgz)')
-        self.add_argument('--order', dest='order', type=int, default=1,optional = True,
-                      help="order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)")
+        self.add_argument(  '--in_name', '--input_name',
+                            type        = str,
+                            dest        = 'iname',
+                            help        = 'name of the input (raw) file to process (default: brain.mgz'),
+                            optional    = True,
+                            default     = 'brain.mgz')
+        self.add_argument(  '--out_name', '--output_name',
+                            dest        = 'oname',
+                            type        = str,
+                            optional    = True,
+                            default     = 'aparc.DKTatlas+aseg.deep.mgz',
+                            help        = 'name of the output segmented file')
+        self.add_argument(  '--order',
+                            dest        = 'order',
+                            type        = int,
+                            default     = 1,
+                            optional    = True,
+                            help        = "interpolation order")
 
         # 3. Options for log-file and search-tag
-        self.add_argument('--tag', '-t', dest='search_tag',type = str, default="*",optional = True,
-                      help='Search tag to process only certain subjects. If a single image should be analyzed, set the '
-                           'tag with its id. Default: processes all.')
-        self.add_argument('--log', dest='logfile',type = str,optional = True, help='name of log-file. Default: deep-seg.log',
-                      default='deep-seg.log')
+        self.add_argument(  '--subject',
+                            dest        = 'search_tag',
+                            type        = str,
+                            default     = "*",
+                            optional    = True,
+                            help        = 'subject(s) to process. This expression is globbed.')
+        self.add_argument(  '--log',
+                            dest        = 'logfile',
+                            type        = str,
+                            optional    = True,
+                            help        = 'name of logfile (default: deep-seg.log)',
+                            default     = 'deep-seg.log')
 
-        # 4. Pre-trained weights
-        self.add_argument('--network_sagittal_path', dest='network_sagittal_path',type = str,optional = True,
-                      help="path to pre-trained weights of sagittal network",
-                      default='../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
-        self.add_argument('--network_coronal_path', dest='network_coronal_path',type = str,optional = True,
-                      help="pre-trained weights of coronal network",
-                      default='../checkpoints/Coronal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
-        self.add_argument('--network_axial_path', dest='network_axial_path',type = str,optional = True,
-                      help="pre-trained weights of axial network",
-                      default='../checkpoints/Axial_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
+        # 4. Pre-trained weights -- NB NB NB -- currently (Jan 2021) these CANNOT
+        # be set by an enduser. These weight files are RELATIVE/INTERNAL to the
+        # container
+        self.add_argument(  '--network_sagittal_path',
+                            dest        = 'network_sagittal_path',
+                            type        = str,
+                            optional    = True,
+                            help        = "path to pre-trained sagittal network weights",
+                            default     = '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
+        self.add_argument(  '--network_coronal_path',
+                            dest        = 'network_coronal_path',
+                            type        = str,
+                            optional    = True,
+                            help        = "path to pre-trained coronal network weights",
+                            default     = '../checkpoints/Coronal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
+        self.add_argument(  '--network_axial_path',
+                            dest        = 'network_axial_path',
+                            type        = str,
+                            optional    = True,
+                            help        = "path to pre-trained axial network weights",
+                            default     = '../checkpoints/Axial_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
 
         # 5. Clean up and GPU/CPU options (disable cuda, change batchsize)
-        self.add_argument('--clean', dest='cleanup',type = bool, optional = True, default = True, help="Flag to clean up segmentation", action='store_true')
-        self.add_argument('--no_cuda',dest = 'no_cuda' ,action='store_true',type = bool,optional = True, default=False, help='disables CUDA training')
-        self.add_argument('--batch_size',dest = 'batch_size', type=int, default=8,optional = True, help="Batch size for inference. Default: 8")
-        self.add_argument('--simple_run', dest = 'simple_run', action='store_true',optional = True, default=False,type = bool,
-                      help='Simplified run: only analyse one given image specified by --in_name (output: --out_name). '
-                           'Need to specify absolute path to both --in_name and --out_name if this option is chosen.')
+        self.add_argument(  '--clean',
+                            dest        = 'cleanup',
+                            type        = bool,
+                            optional    = True,
+                            default     = True,
+                            help        = "if specified, clean up segmentation",
+                            action      = 'store_true')
+        self.add_argument(  '--no_cuda',
+                            dest        = 'no_cuda',
+                            action      = 'store_true',
+                            type        = bool,
+                            optional    = True,
+                            default     = False,
+                            help        = 'if specified, do not use GPU')
+        self.add_argument(  '--batch_size',
+                            dest        = 'batch_size',
+                            type        = int,
+                            default     = 8,
+                            optional    = True,
+                            help        = "batch size for inference (default: 8")
+        self.add_argument(  '--simple_run',
+                            dest        = 'simple_run',
+                            action      = 'store_true',
+                            optional    = True,
+                            default     = False,
+                            type        = bool,
+                            help        = 'simplified run: only analyze one subject')
+
         # Adding check to parallel processing, default = false
-        self.add_argument('--run_parallel',dest = 'run_parallel', type= bool, action = 'store_true', optional = True , default = False, help = 'Enables parallel processing. Default mode : FALSE')
-        
-        self.add_argument('--copyInputImage',dest = 'copyImage',action ='store_true', type=bool, default=False,optional = True, help="Copies input file to output dir.")
+        self.add_argument(  '--run_parallel',
+                            dest        = 'run_parallel',
+                            type        = bool,
+                            action      = 'store_true',
+                            optional    = True ,
+                            default     = False,
+                            help        = 'if specified, allows for execute on multiple GPUs')
+
+        self.add_argument(  '--copyInputImage',
+                            dest        = 'copyImage',
+                            action      = 'store_true',
+                            type        = bool,
+                            default     = False,
+                            optional    = True,
+                            help        = "if specified, copy input file to output dir.")
+
     def fast_surfer_cnn(self,img_filename, save_as, logger, args):
-        
         """
         Cortical parcellation of single image
         :param str img_filename: name of image file
@@ -340,7 +400,7 @@ class Fastsurfer_inference(ChrisApp):
         logger.info("Reading volume {}".format(img_filename))
 
         header_info, affine_info, orig_data = load_and_conform_image(img_filename, interpol=args.order)
-        
+
         if args.copyImage:
             mgz_file = nib.load(img_filename)
             out_path = save_as.replace(args.oname,args.iname)
@@ -643,7 +703,7 @@ class Fastsurfer_inference(ChrisApp):
         header_info.set_data_dtype(np.int16)
         mapped_aseg_img = nib.MGHImage(prediction_image, affine_info, header_info)
         mapped_aseg_img.to_filename(save_as)
-        
+
         logger.info("Saving Segmentation to {}".format(save_as))
         logger.info("Total processing time: {:0.4f} seconds.".format(time.time() - start_total))
 
@@ -698,7 +758,7 @@ class Fastsurfer_inference(ChrisApp):
                 invol = op.join(current_subject, options.iname)
                 logfile = op.join(options.outputdir, subject, options.logfile)
                 save_file_name = op.join(options.outputdir, subject, options.oname)
-                
+
 
                 logger.info("Running Fast Surfer on {}".format(subject))
 
