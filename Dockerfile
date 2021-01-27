@@ -8,9 +8,10 @@
 #
 #   docker build -t local/pl-fastsurfer_inference .
 #
-# In the case of a proxy (located at 192.168.13.14:3128), do:
+# In the case of a proxy (located at say 10.41.13.4:3128), do:
 #
-#    docker build --build-arg http_proxy=http://192.168.13.14:3128 --build-arg UID=$UID -t local/pl-fastsurfer_inference .
+#    export PROXY="http://10.41.13.4:3128"
+#    docker build --build-arg http_proxy=${PROXY} --build-arg UID=$UID -t local/pl-fastsurfer_inference
 #
 # To run an interactive shell inside this container, do:
 #
@@ -25,7 +26,7 @@
 
 FROM tensorflow/tensorflow:latest-gpu-py3
 ARG PYTHON_VERSION=3.6
-MAINTAINER fnndsc "dev@babymri.org"
+LABEL MAINTAINER="dev@babymri.org"
 
 ENV APPROOT="/usr/src/fastsurfer_inference"
 COPY ["fastsurfer_inference", "${APPROOT}"]
