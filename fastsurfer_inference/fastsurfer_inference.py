@@ -240,7 +240,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.6'
+    VERSION                 = '1.0.8'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -715,8 +715,15 @@ class Fastsurfer_inference(ChrisApp):
         """
         print(Gstr_title)
         print('Version: %s' % self.get_version())
+
+        # Output the space of CLI
+        d_options = vars(options)
+        for k,v in d_options.items():
+            print("%20s: %-40s" % (k, v))
+        print("")
+
         # Command Line options and error checking done here
-        #options = options_parse()
+        # options = options_parse()
 
         # Set up the logger
         logger = logging.getLogger("eval")
