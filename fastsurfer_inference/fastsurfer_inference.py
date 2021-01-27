@@ -240,7 +240,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.8'
+    VERSION                 = '1.0.10'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -375,7 +375,7 @@ class Fastsurfer_inference(ChrisApp):
                             help        = 'if specified, allows for execute on multiple GPUs')
 
         self.add_argument(  '--copyInputImage',
-                            dest        = 'copyImage',
+                            dest        = 'copyInputImage',
                             action      = 'store_true',
                             type        = bool,
                             default     = False,
@@ -401,7 +401,7 @@ class Fastsurfer_inference(ChrisApp):
 
         header_info, affine_info, orig_data = load_and_conform_image(img_filename, interpol=args.order)
 
-        if args.copyImage:
+        if args.copyInputImage:
             mgz_file = nib.load(img_filename)
             out_path = save_as.replace(args.oname,args.iname)
             logger.info("Copying volume to {}".format(out_path))
