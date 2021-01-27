@@ -80,10 +80,6 @@ Gstr_title = """
 
 Gstr_synopsis = """
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1e418983bcd989e706c3175c800c65743bc91d36
     NAME
 
        fastsurfer_inference.py
@@ -209,7 +205,7 @@ Gstr_synopsis = """
         If multiple GPUs are present to the docker container, enable parallel
         computation on multiple GPUs with an inference run.
 
-        [--copyInputImage]                                                                                         \
+        [--copyInputImage]
         If specified, copies the input volume to output dir. This can be useful
         to create an easy association between a given input volume and the
         segmented output.
@@ -244,7 +240,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '0.99'
+    VERSION                 = '1.0.0'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value

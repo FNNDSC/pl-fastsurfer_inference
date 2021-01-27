@@ -146,7 +146,7 @@ Arguments
         If multiple GPUs are present to the docker container, enable parallel
         computation on multiple GPUs with an inference run.
 
-        [--copyInputImage]                                                                                         \
+        [--copyInputImage]
         If specified, copies the input volume to output dir. This can be useful
         to create an easy association between a given input volume and the
         segmented output.
