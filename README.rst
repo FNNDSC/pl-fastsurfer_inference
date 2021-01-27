@@ -16,160 +16,157 @@ pl-fastsurfer_inference
 Abstract
 --------
 
-<<<<<<< HEAD
-``pl-fastsurfer_inference`` is a ChRIS DS app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images. It relies upon and uses the FastSurfer engine of Martin Reuter, available at https://www.sciencedirect.com/science/article/pii/S1053811920304985.
-=======
-An app to efficiently perform cortical parcellation and anatomical segmentation mimicking FreeSurfer, on raw brain MRI images
+``fastsurfer_inference`` is a ChRIS app that efficiently performs cortical parcellation and anatomical segmentation on raw brain MRI images. In actuality, the ChRIS app is wrapper/vehicle around the FastSurfer engine developed by the Deep Medical Imaging lab.
 
-N.B. This plug-in is a GPU efficient plug-in. It takes <1 minute to complete inference on a single brain.mgz file.
-     In case a GPU is not available, a system with minimum 24GB RAM is required to run this plug-in. It takes about 90 minutes to complete inference on
-     one subject on a CPU
+This plugin is GPU-capable. In anecdotal testing, a full segmentation on the GPU takes in the order of a minute (or less). The same segmentation on CPU can take 90 minutes. Note for CPU running, a machine with high RAM is required. While not fully tested, we recommend at least 24GB RAM for CPU runs (although 16GB RAM might work).
+
 
 Citations
 ---------
 
-This plug-in uses the FastSurfer application built by Leonie Henschel, Sailesh Conjeti, Santiago Estrada, Kersten Diers, Bruce Fischl & Martin Reuter
+For full information about the underlying method, consult the FastSurfer publication:
 
-The link to the publication can be found here : https://www.sciencedirect.com/science/article/pii/S1053811920304985
+            Henschel L, Conjeti S, Estrada S, Diers K, Fischl B, Reuter M.
+            "FastSurfer - A fast and accurate deep learning based neuroimaging
+            pipeline." NeuroImage. 2020.
+
+            https://arxiv.org/pdf/2009.04392.pdf
+            https://deep-mi.org/static/pub/ewert_2020.bib
 
 The source code of FastSurfer is available on Github: https://github.com/Deep-MI/FastSurfer.
 
-
->>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
 
 Synopsis
 --------
 
 .. code::
 
-    python fastsurfer_inference.py                                  \
-        [-v <level>] [--verbosity <level>]                          \
-        [--version]                                                 \
-        [--man]                                                     \
-        [--meta]                                                    \
-        [--multi <dir containing mgz files of multiple subjects>]   \
-        [--in_name <name of the i/p mgz file>]                      \
-        [--out_name <name of the o/p segmented mgz file>]           \
-        [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
-        [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
-                           'tag with its id. Default: processes all.'>]\
-        [--log <name of the log file>]                              \
-        [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
-        [--network_coronal_path <pre-trained weights of coronal network>] \
-        [--network_axial_path <pre-trained weights of axial network>] \
-        [--clean]                                                    \
-        [--no_cuda]                                                  \
-        [--batch_size <Batch size for inference. Default: 8>]        \
-        [--simple_run]                                               \
-        [--run_parallel]                                             \
-        [--copyInputImage]                                           \
-        <inputDir>
-        <outputDir>
+        python fastsurfer_inference.py                                      \
+                                    [--subjectDir <subjectDir>]             \
+                                    [--subject <subjectToProcess>]          \
+                                    [--in_name <inputFileToProcess>]        \
+                                    [--out_name <segmentedFile]             \
+                                    [--order <interpolation>]               \
+                                    [--log <logFile>]                       \
+                                    [--clean]                               \
+                                    [--no_cuda]                             \
+                                    [--batch_size <batchSizePerInference]   \
+                                    [--simple_run]                          \
+                                    [--run_parallel]                        \
+                                    [--copyInputImage]                      \
+                                    [-v <level>] [--verbosity <level>]      \
+                                    [--version]                             \
+                                    [--man]                                 \
+                                    [--meta]                                \
+                                    <inputDir>
+                                    <outputDir>
 
 Description
 -----------
 
-``fastsurfer_inference.py`` is a ChRIS-based application that is capable of whole brain segmentation into 95 classes
+``fastsurfer_inference.py`` is a ChRIS-based application that is capable of whole brain segmentation into 95 classes.
 
-TLDR
+TL;DR
 ------
-Just pull the docker image
+
+Simply pull the docker image,
 
 .. code::
 
     docker pull fnndsc/pl-fastsurfer_inference
 
-Go straight to the examples section
+and go straight to the examples section.
 
 Arguments
 ---------
 
 .. code::
-    
-    [--multi <dir containing mgz files of multiple subjects>]   \
-    If this argument is selected then the plug-in can process multiple subjects sequentially in a single run.
-    
-    [--in_name <name of the i/p mgz file>]                      \
-    The name of the raw .mgz file of a subject. The default value is brain.mgz
-    
-    [--out_name <name of the o/p segmented mgz file>]           \
-    The name of the o/p or segmented mgz file. Default name is aparc.DKTatlas+aseg.deep.mgz
-    If a separate subfolder is desired (e.g. FS conform, add it to the name: '
-                           'mri/aparc.DKTatlas+aseg.deep.mgz)')
-    
-    [--order <order of interpolation (0=nearest,1=linear(default),2=quadratic,3=cubic)>] \
-    
-    [--tag/-t <Search tag to process only certain subjects. If a single image should be analyzed, set the '
-                           'tag with its id. Default: processes all.'>]\
-                           
-    [--log <name of the log file>]                              \
-    The name of the log file containing inference info. Default value is `deep-seg.log`
-    
-    [--network_sagittal_path <path to pre-trained weights of sagittal network>] \
-    The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
-    
-    [--network_coronal_path <pre-trained weights of coronal network>] \
-    The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
-    
-    [--network_axial_path <pre-trained weights of axial network>] \
-    The path where a trained sagittal network resides. Default value is '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl'
-    
-    [--clean] \
-    Flag to clean up segmentation
-    
-    [--no_cuda] \
-    The plug-in uses CPU for computation if this argument is specified. Approximate time taken is 1:30 hrs per subject
-    
-    [--batch_size <Batch size for inference. Default: 8>] \
-    
-    [--simple_run <Simplified run: only analyse one given image specified by --in_name (output: --out_name).>] \
-    Need to specify absolute path to both --in_name and --out_name if this option is chosen.
-    
-    [--run_parallel]                \
-    If specified and multiple GPUs exists, inference runs parallely on multiple GPUs. Default mode is false
-    
-    [--copyInputImage]
-    If specified, copies input mgz file to o/p dir. Default value is false
 
-    [-v <level>] [--verbosity <level>]
-    Verbosity level for app. Not used currently.
+        [--subjectDir <subjectDir>]
+        By default, the <subjectDir> is assumed to be the <inputDir>. However,
+        the <subjectDir> can be nested relative to the <inputDir>, and can thus
+        be specified with this flag.
 
-    [--version]
-    If specified, print version number.
+        The <subjectDir> is assumed by default to contain one level of sub
+        directory, and these sub dirs, considered the ``subjects``, each contain
+        a single ``mgz`` to process.
 
-    [--man]
-    If specified, print (this) man page.
+        [--subject <subjectToProcess>]
+        This can denote a sub-set of subject(s) (i.e. sub directory within the
+        <subjectDir>). The <subjectToProcess> is "globbed", so an expression
+        like ``--subject 10*`` would process all ``subjects`` starting with the
+        text string ``10``. Note to protect from shell expansion of wildcard
+        characters, the argument should be protected in single quotes.
 
-    [--meta]
-    If specified, print plugin meta data.
+        [--in_name <inputFileToProcess>]
+        The name of the raw ``.mgz`` file of a subject. The default value is
+        ``brain.mgz``. The full path to the <inputFileToProcess> is constructed
+        by concatenating
 
+                ``<inputDir>/<subjectDir>/<subject>/<inputFileToProcess>``
+
+        [--out_name <segmentedFile]
+        The name of the output or segmented ``mgz`` file. Default name is
+
+                            ``aparc.DKTatlas+aseg.deep.mgz``
+
+        [--order <interpolation>]
+        The order of interpolation:
+
+                            0 = nearest
+                            1 = linear (default)
+                            2 = quadratic
+                            3 = cubic
+
+        [--log <logFile>]
+        The name of the log file containing inference info. Default value is
+
+                            ``deep-seg.log``
+
+        [--clean]
+        If specified, clean the segmentation.
+
+        [--no_cuda]
+        If specified, run on CPU, not GPU. Depending on CPU/GPU, your apparent
+        mileage will vary, but expect orders longer time than compared to a
+        GPU.
+
+        For example, in informal testing, GPU takes about a minute per
+        subject, while CPU approximately 1.5 hours per subject!
+
+        [--batch_size <batchSizePerInference]
+        Batch size per inference. Default is 8.
+
+        [--simple_run]
+        Simplified run: only analyse one given image specified by ``--in_name``
+        (output: ``--out_name``). Note that you need to specify absolute path
+        to both ``--in_name`` and ``--out_name`` if this option is chosen.
+
+        [--run_parallel]
+        If multiple GPUs are present to the docker container, enable parallel
+        computation on multiple GPUs with an inference run.
+
+        [--copyInputImage]                                                                                         \
+        If specified, copies the input volume to output dir. This can be useful
+        to create an easy association between a given input volume and the
+        segmented output.
+
+        [-v <level>] [--verbosity <level>]
+        Verbosity level for app. Not used currently.
+
+        [--version]
+        If specified, print version number.
+
+        [--man]
+        If specified, print (this) man page.
+
+        [--meta]
+        If specified, print plugin meta data.
 
 Run
 ----
 
-This ``plugin`` can be run in two modes: natively as a python package or as a containerized docker image.
-
-Using PyPI
-~~~~~~~~~~
-
-To run from PyPI, simply do a
-
-.. code:: bash
-
-    pip install fastsurfer_inference
-
-and run with
-
-.. code:: bash
-
-    fastsurfer_inference.py --man /tmp /tmp
-
-to get inline help. The app should also understand being called with only two positional arguments
-
-.. code:: bash
-
-    fastsurfer_inference.py /some/input/directory /destination/directory
-
+The execute vector of this pluing is via ``docker``.
 
 Using ``docker run``
 ~~~~~~~~~~~~~~~~~~~~
@@ -198,55 +195,60 @@ Thus, getting inline help is:
 Examples
 --------
 
-<<<<<<< HEAD
-This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure
-=======
-This is just a quick and dirty way to get the plug-in working. Remember, the input directory should have the below structure for `--multi` feature to work
->>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
+Assuming that the ``<inputDir>`` layout conforms to
 
 .. code:: bash
 
-   -> inputdir
-<<<<<<< HEAD
-       -> Subject1
-          -> brain.mgz
-       -> Subject2
-       -> Subject3
-       .
-       .
-       .
-       -> SubjectN
+    <inputDir>
+        │
+        └──<subjectDir>
+                │
+                ├──<subject1>
+                │      │
+                │      └──█ brain.mgz
+                ├──<subject2>
+                │      │
+                │      └──█ brain.mgz
+                ├──<subject3>
+                │      │
+                │      └──█ brain.mgz
+                ╎     ┄
+                ╎     ┄
+                └──<subjectN>
+                       │
+                       └──█ brain.mgz
 
-
-=======
-       -> Subjects
-           -> Subject1
-              -> brain.mgz
-           -> Subject2
-           -> Subject3
-           .
-           .
-           .
-           -> SubjectN
-       
-       
->>>>>>> 7cfdf47d055ecd582b56c888c36a95ee73f607b2
-Running the plug-in on GPU
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(Note: the parameter ```--gpus all``` is not required. If however this plug-in fails to access the GPU, use the parameters as mentioned below)
-
-
-To run using ``docker``, be sure to assign an "input" directory to ``/incoming`` and an output directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
+to process this (by default on a GPU) do
 
 .. code:: bash
 
-   docker run --rm --gpus all -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-            fnndsc/pl-fastsurfer_inference fastsurfer_inference.py     \
-            --t Subject1 --in_name brain.mgz                             \
-            /incoming /outgoing
+   docker run   --rm --gpus all                                             \
+                -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing              \
+                fnndsc/pl-fastsurfer_inference fastsurfer_inference.py      \
+                /incoming /outgoing
 
-The output file will be saved as ``/outgoing/Subject1/aparc.DKTatlas+aseg.deep.mgz``
+(note the ``--gpus all`` is not necessarily required) which will create in the ``<outputDir>``:
+
+.. code:: bash
+
+    <outputDir>
+        │
+        └──<subjectDir>
+                │
+                ├──<subject1>
+                │      │
+                │      └──█ aparc.DKTatlas+aseg.deep.mgz
+                ├──<subject2>
+                │      │
+                │      └──█ aparc.DKTatlas+aseg.deep.mgz
+                ├──<subject3>
+                │      │
+                │      └──█ aparc.DKTatlas+aseg.deep.mgz
+                ╎     ┄
+                ╎     ┄
+                └──<subjectN>
+                       │
+                       └──█ aparc.DKTatlas+aseg.deep.mgz
 
 
-
+_-30-_
