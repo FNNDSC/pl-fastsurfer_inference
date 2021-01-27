@@ -240,7 +240,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.0'
+    VERSION                 = '1.0.2'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -279,7 +279,8 @@ class Fastsurfer_inference(ChrisApp):
                             help        = "directory (relative to <inputDir>) of subjects to process",
                             default     = "")
 
-        # 2. Options for the MRI volumes (name of in and output, order of interpolation if not conformed)
+        # 2. Options for the MRI volumes 
+        # (name of in and output, order of interpolation if not conformed)
         self.add_argument(  '--in_name', '--input_name',
                             type        = str,
                             dest        = 'iname',
