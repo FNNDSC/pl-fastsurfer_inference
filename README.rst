@@ -16,7 +16,7 @@ pl-fastsurfer_inference
 Abstract
 --------
 
-``fastsurfer_inference`` is a ChRIS app that efficiently performs cortical parcellation and anatomical segmentation on raw brain MRI images. In actuality, the ChRIS app is wrapper/vehicle around the FastSurfer engine developed by the Deep Medical Imaging lab.
+``fastsurfer_inference`` is a ChRIS app that efficiently performs cortical parcellation and anatomical segmentation on raw brain MRI images. In actuality, the ChRIS app is wrapper/vehicle around the FastSurfer engine developed by the Deep Medical Imaging lab. This plugin only wraps around the neural network (responsible for image segmentation). FastSurfer also has a recon-surf surface pipeline.
 
 This plugin is GPU-capable. In anecdotal testing, a full segmentation on the GPU takes in the order of a minute (or less). The same segmentation on CPU can take 90 minutes. Note for CPU running, a machine with high RAM is required. While not fully tested, we recommend at least 24GB RAM for CPU runs (although 16GB RAM might work).
 
@@ -30,8 +30,8 @@ For full information about the underlying method, consult the FastSurfer publica
             "FastSurfer - A fast and accurate deep learning based neuroimaging
             pipeline." NeuroImage. 2020.
 
-            https://arxiv.org/pdf/2009.04392.pdf
-            https://deep-mi.org/static/pub/ewert_2020.bib
+            Paper: http://dx.doi.org/10.1016/j.neuroimage.2020.117012 
+            Bib: https://deep-mi.org/static/pub/henschel_2020.bib 
 
 The source code of FastSurfer is available on Github: https://github.com/Deep-MI/FastSurfer.
 
