@@ -240,7 +240,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.10'
+    VERSION                 = '1.0.12'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -273,7 +273,7 @@ class Fastsurfer_inference(ChrisApp):
         # Requiered options
         # 1. Directory information (where to read from, where to write to)
         self.add_argument(  '--subjectDir',
-                            dest        = 'multi',
+                            dest        = 'subjectDir',
                             type        = str,
                             optional    = True,
                             help        = "directory (relative to <inputDir>) of subjects to process",
@@ -281,13 +281,13 @@ class Fastsurfer_inference(ChrisApp):
 
         # 2. Options for the MRI volumes
         # (name of in and output, order of interpolation if not conformed)
-        self.add_argument(  '--in_name', '--input_name',
+        self.add_argument(  '--in_name', '-i',
                             type        = str,
                             dest        = 'iname',
                             help        = 'name of the input (raw) file to process (default: brain.mgz)',
                             optional    = True,
                             default     = 'brain.mgz')
-        self.add_argument(  '--out_name', '--output_name',
+        self.add_argument(  '--out_name', '-o',
                             dest        = 'oname',
                             type        = str,
                             optional    = True,
@@ -302,7 +302,7 @@ class Fastsurfer_inference(ChrisApp):
 
         # 3. Options for log-file and search-tag
         self.add_argument(  '--subject',
-                            dest        = 'search_tag',
+                            dest        = 'subject',
                             type        = str,
                             default     = "*",
                             optional    = True,
@@ -743,12 +743,14 @@ class Fastsurfer_inference(ChrisApp):
         else:
 
             # Prepare subject list to be processed
-            if options.multi != "":
-                search_path = op.join(options.inputdir, options.multi,options.search_tag)
+            if options.subjectDir != "":
+                search_path = op.join(  options.inputdir,
+                                        options.subjectDir,
+                                        options.subject)
                 subject_directories = glob.glob(search_path)
 
             else:
-                search_path = op.join(options.inputdir, options.search_tag)
+                search_path = op.join(options.inputdir, options.subject)
                 subject_directories = glob.glob(search_path)
 
             # Report number of subjects to be processed and loop over them
