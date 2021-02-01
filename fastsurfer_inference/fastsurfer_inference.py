@@ -240,7 +240,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.12'
+    VERSION                 = '1.0.14'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
