@@ -37,6 +37,7 @@ import os.path as op
 import logging
 import torch
 import torch.nn as nn
+import shutil
 
 from torch.autograd import Variable
 from torch.utils.data.dataloader import DataLoader
@@ -98,7 +99,7 @@ Gstr_synopsis = """
                                     [--batch_size <batchSizePerInference]   \\
                                     [--simple_run]                          \\
                                     [--run_parallel]                        \\
-                                    [--copyInputImage]                      \\
+                                    [--copyInputFiles <seachKeyword>]       \\
                                     [-v <level>] [--verbosity <level>]      \\
                                     [--version]                             \\
                                     [--man]                                 \\
@@ -205,9 +206,9 @@ Gstr_synopsis = """
         If multiple GPUs are present to the docker container, enable parallel
         computation on multiple GPUs with an inference run.
 
-        [--copyInputImage]
-        If specified, copies the input volume to output dir. This can be useful
-        to create an easy association between a given input volume and the
+        [--copyInputFiles <searchKeyword>]
+        If specified, copies the input files matching the keywords to output dir. This can be
+        useful to create an easy association between a given input files and the
         segmented output.
 
         [-v <level>] [--verbosity <level>]
@@ -240,7 +241,7 @@ class Fastsurfer_inference(ChrisApp):
     TYPE                    = 'ds'
     DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
     DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.14'
+    VERSION                 = '1.0.15'
     ICON                    = '' # url of an icon image
     LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
@@ -374,13 +375,12 @@ class Fastsurfer_inference(ChrisApp):
                             default     = False,
                             help        = 'if specified, allows for execute on multiple GPUs')
 
-        self.add_argument(  '--copyInputImage',
-                            dest        = 'copyInputImage',
-                            action      = 'store_true',
-                            type        = bool,
-                            default     = False,
+        self.add_argument(  '--copyInputFiles',
+                            dest        = 'copyInputFiles',
+                            type        = str,
+                            default     = "",
                             optional    = True,
-                            help        = "if specified, copy input file to output dir.")
+                            help        = "if specified, copy i/p files matching the input regex to o/p dir")
 
     def fast_surfer_cnn(self,img_filename, save_as, logger, args):
         """
@@ -400,13 +400,23 @@ class Fastsurfer_inference(ChrisApp):
         logger.info("Reading volume {}".format(img_filename))
 
         header_info, affine_info, orig_data = load_and_conform_image(img_filename, interpol=args.order)
-
-        if args.copyInputImage:
-            mgz_file = nib.load(img_filename)
-            out_path = save_as.replace(args.oname,args.iname)
-            logger.info("Copying volume to {}".format(out_path))
-            mgz_file.to_filename(out_path)
-
+        
+        # Copy file(s) from input dir to output dir subject wise
+        if args.copyInputFiles !="":
+        
+            # define source and destination dir
+            source_dir_path = img_filename.replace(args.iname,'')
+            dest_dir_path = save_as.replace(args.oname,'')
+            
+            # search for files using the given keyword
+            found_files = glob.glob(source_dir_path+"/*%s*" %args.copyInputFiles, recursive = True)
+            
+            # now iteratively copy the files
+            for file_path in found_files:
+                logger.info("Copying files from %s" %file_path)
+                shutil.copy(file_path, dest_dir_path)
+            
+            
         transform_test = transforms.Compose([ToTensorTest()])
 
         test_dataset_axial = OrigDataThickSlices(img_filename, orig_data, transforms=transform_test, plane='Axial')

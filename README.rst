@@ -53,7 +53,7 @@ Synopsis
                                     [--batch_size <batchSizePerInference]   \
                                     [--simple_run]                          \
                                     [--run_parallel]                        \
-                                    [--copyInputImage]                      \
+                                    [--copyInputFiles <searchKeyword>]      \
                                     [-v <level>] [--verbosity <level>]      \
                                     [--version]                             \
                                     [--man]                                 \
@@ -146,9 +146,9 @@ Arguments
         If multiple GPUs are present to the docker container, enable parallel
         computation on multiple GPUs with an inference run.
 
-        [--copyInputImage]
-        If specified, copies the input volume to output dir. This can be useful
-        to create an easy association between a given input volume and the
+        [--copyInputFiles <searchKeyword>]
+        If specified, copies the input file(s) matching the keyword to output dir. This can be useful
+        to create an easy association between a given input file(s) and the
         segmented output.
 
         [-v <level>] [--verbosity <level>]
