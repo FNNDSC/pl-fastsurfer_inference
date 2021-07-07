@@ -1,14 +1,8 @@
 pl-fastsurfer_inference
 ================================
 
-.. image:: https://badge.fury.io/py/fastsurfer_inference.svg
-    :target: https://badge.fury.io/py/fastsurfer_inference
-
-.. image:: https://travis-ci.org/FNNDSC/fastsurfer_inference.svg?branch=master
-    :target: https://travis-ci.org/FNNDSC/fastsurfer_inference
-
-.. image:: https://img.shields.io/badge/python-3.5%2B-blue.svg
-    :target: https://badge.fury.io/py/pl-fastsurfer_inference
+.. image:: https://img.shields.io/docker/v/fnndsc/pl-fastsurfer_inference?sort=semver
+    :target: https://hub.docker.com/r/fnndsc/pl-fastsurfer_inference
 
 .. contents:: Table of Contents
 
