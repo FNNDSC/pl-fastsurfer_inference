@@ -1,29 +1,16 @@
-
-import sys
-import os
-
-
-# Make sure we are running python3.5+
-if 10 * sys.version_info[0] + sys.version_info[1] < 35:
-    sys.exit("Sorry, only Python 3.5+ is supported.")
-
-
+from os import path
 from setuptools import setup
 
 
-def readme():
-    print("Current dir = %s" % os.getcwd())
-    print(os.listdir())
-    with open('README.rst') as f:
-        return f.read()
+with open(path.join(path.dirname(path.abspath(__file__)), 'README.rst')) as f:
+    readme = f.read()
+
 
 setup(
       name             =   'fastsurfer_inference',
-      # for best practices make this version the same as the VERSION class variable
-      # defined in your ChrisApp-derived Python class
-      version          =   '1.0.15',
+      version          =   '1.0.16',
       description      =   'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images using the "fastsurfer" engine of Martin Reuter',
-      long_description =   readme(),
+      long_description =   readme,
       author           =   'Sandip Samal (www.fnndsc.org)',
       author_email     =   'sandip.samal@childrens.harvard.edu',
       url              =   'https://github.com/FNNDSC/pl-fastsurfer_inference',
@@ -33,5 +20,6 @@ setup(
       tests_require    =   ['nose'],
       scripts          =   ['fastsurfer_inference/fastsurfer_inference.py'],
       license          =   'MIT',
-      zip_safe         =   False
+      zip_safe         =   False,
+      python_requires  =   '>=3.5'
      )
