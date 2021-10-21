@@ -8,7 +8,7 @@ with open(path.join(path.dirname(path.abspath(__file__)), 'README.rst')) as f:
 
 setup(
       name             =   'fastsurfer_inference',
-      version          =   '1.0.16',
+      version          =   '1.2.0',
       description      =   'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images using the "fastsurfer" engine of Martin Reuter',
       long_description =   readme,
       author           =   'Sandip Samal (www.fnndsc.org)',
