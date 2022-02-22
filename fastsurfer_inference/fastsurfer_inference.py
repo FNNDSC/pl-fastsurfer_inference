@@ -1,29 +1,12 @@
-#!/usr/bin/env python
 #
 # fastsurfer_inference ds ChRIS plugin app
 #
-# (c) 2016-2019 Fetal-Neonatal Neuroimaging & Developmental Science Center
+# (c) 2022 Fetal-Neonatal Neuroimaging & Developmental Science Center
 #                   Boston Children's Hospital
 #
 #              http://childrenshospital.org/FNNDSC/
 #                        dev@babyMRI.org
 #
-
-# Copyright 2019 Image Analysis Lab, German Center for Neurodegenerative Diseases (DZNE), Bonn
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-
 
 # IMPORTS
 import optparse
@@ -66,17 +49,15 @@ sys.path.append(os.path.dirname(__file__))
 from chrisapp.base import ChrisApp
 
 
-Gstr_title = """
-
+Gstr_title = r"""
   __          _                   __          _        __                             
  / _|        | |                 / _|        (_)      / _|                            
 | |_ __ _ ___| |_ ___ _   _ _ __| |_ ___ _ __ _ _ __ | |_ ___ _ __ ___ _ __   ___ ___ 
-|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \ 
+|  _/ _` / __| __/ __| | | | '__|  _/ _ \ '__| | '_ \|  _/ _ \ '__/ _ \ '_ \ / __/ _ \
 | || (_| \__ \ |_\__ \ |_| | |  | ||  __/ |  | | | | | ||  __/ | |  __/ | | | (_|  __/
 |_| \__,_|___/\__|___/\__,_|_|  |_| \___|_|  |_|_| |_|_| \___|_|  \___|_| |_|\___\___|
-                                        ______
-                                       |______|
-
+                                        ______                                        
+                                       |______|                                       
 """
 
 Gstr_synopsis = """
@@ -222,7 +203,6 @@ Gstr_synopsis = """
 
         [--meta]
         If specified, print plugin meta data.
-
 """
 
 
@@ -232,24 +212,16 @@ class Fastsurfer_inference(ChrisApp):
     on raw brain MRI images, using FastSurfer developed by the
     Deep Medical Imaging Lab (https://deep-mi.org).
     """
-    AUTHORS                 = 'Martin Reuter (FastSurfer), Sandip Samal (FNNDSC) (sandip.samal@childrens.harvard.edu)'
-    SELFPATH                = os.path.dirname(os.path.abspath(__file__))
-    SELFEXEC                = os.path.basename(__file__)
-    EXECSHELL               = 'python3'
+
+    PACKAGE               = __package__
     TITLE                   = 'An inference app of FastSurfer'
     CATEGORY                = ''
     TYPE                    = 'ds'
-    DESCRIPTION             = 'An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images'
-    DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '1.0.15'
     ICON                    = '' # url of an icon image
-    LICENSE                 = 'Opensource (MIT)'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
     MIN_NUMBER_OF_WORKERS   = 1  # Override with integer value
-    MAX_CPU_LIMIT           = '' # Override with millicore value as string, e.g. '2000m'
-    MIN_CPU_LIMIT           = '30000m' # Override with millicore value as string, e.g. '2000m'
-    MAX_MEMORY_LIMIT        = '' # Override with string, e.g. '1Gi', '2000Mi'
-    MIN_MEMORY_LIMIT        = '30000Mi' # Override with string, e.g. '1Gi', '2000Mi'
+    MIN_CPU_LIMIT           = 2000 # Override with millicore value as string, e.g. '2000m'
+    MIN_MEMORY_LIMIT        = 2000 # Override with string, e.g. '1Gi', '2000Mi'
     MIN_GPU_LIMIT           = 0  # Override with the minimum number of GPUs, as an integer, for your plugin
     MAX_GPU_LIMIT           = 0  # Override with the maximum number of GPUs, as an integer, for your plugin
 
@@ -323,19 +295,19 @@ class Fastsurfer_inference(ChrisApp):
                             type        = str,
                             optional    = True,
                             help        = "path to pre-trained sagittal network weights",
-                            default     = '../checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
+                            default     = './checkpoints/Sagittal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
         self.add_argument(  '--network_coronal_path',
                             dest        = 'network_coronal_path',
                             type        = str,
                             optional    = True,
                             help        = "path to pre-trained coronal network weights",
-                            default     = '../checkpoints/Coronal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
+                            default     = './checkpoints/Coronal_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
         self.add_argument(  '--network_axial_path',
                             dest        = 'network_axial_path',
                             type        = str,
                             optional    = True,
                             help        = "path to pre-trained axial network weights",
-                            default     = '../checkpoints/Axial_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
+                            default     = './checkpoints/Axial_Weights_FastSurferCNN/ckpts/Epoch_30_training_state.pkl')
 
         # 5. Clean up and GPU/CPU options (disable cuda, change batchsize)
         self.add_argument(  '--clean',

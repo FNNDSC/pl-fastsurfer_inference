@@ -8,10 +8,9 @@
 #
 #   docker build -t local/pl-fastsurfer_inference .
 #
-# In the case of a proxy (located at say 10.41.13.4:3128), do:
+# In the case of a proxy (located at 192.168.13.14:3128), do:
 #
-#    export PROXY="http://10.41.13.4:3128"
-#    docker build --build-arg http_proxy=${PROXY} --build-arg UID=$UID -t local/pl-fastsurfer_inference
+#    docker build --build-arg http_proxy=http://192.168.13.14:3128 --build-arg UID=$UID -t local/pl-fastsurfer_inference .
 #
 # To run an interactive shell inside this container, do:
 #
@@ -22,19 +21,15 @@
 #   docker run -ti -e HOST_IP=$(ip route | grep -v docker | awk '{if(NF==11) print $9}') --entrypoint /bin/bash local/pl-fastsurfer_inference
 #
 
-
-
 FROM tensorflow/tensorflow:latest-gpu-py3
-ARG PYTHON_VERSION=3.6
-LABEL MAINTAINER="dev@babymri.org"
+LABEL maintainer="Martin Reuter (FastSurfer), Sandip Samal (FNNDSC) (sandip.samal@childrens.harvard.edu) <dev@babyMRI.org>"
 
-ENV APPROOT="/usr/src/fastsurfer_inference"
-COPY ["fastsurfer_inference", "${APPROOT}"]
-COPY ["requirements.txt", "${APPROOT}"]
-COPY ["checkpoints", "/usr/src/checkpoints"]
+WORKDIR /usr/local/src
 
-WORKDIR $APPROOT
-RUN pip install --upgrade pip
+COPY requirements.txt .
 RUN pip install -r requirements.txt
-ENTRYPOINT ["python3"]
-CMD ["fastsurfer_inference.py", "--help"]
+
+COPY . .
+RUN pip install .
+
+CMD ["fastsurfer_inference", "--help"]
