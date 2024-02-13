@@ -24,7 +24,7 @@ logger.remove()
 logger.opt(colors = True)
 logger.add(sys.stderr, format=logger_format)
 
-__version__ = '1.3.5'
+__version__ = '1.3.6'
 
 DISPLAY_TITLE = r"""
   __          _                   __          _        __                             
@@ -169,7 +169,7 @@ def preamble_show(options) -> None:
     title='An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images',
     category='',                 # ref. https://chrisstore.co/plugins
     min_memory_limit='4Gi',    # supported units: Mi, Gi
-    min_cpu_limit='4000m',       # millicores, e.g. "1000m" = 1 CPU core
+    min_cpu_limit='8000m',       # millicores, e.g. "1000m" = 1 CPU core
     min_gpu_limit=0              # set min_gpu_limit=1 to enable GPU
 )
 @pflog.tel_logTime(
