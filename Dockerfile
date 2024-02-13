@@ -21,10 +21,10 @@
 #   docker run -ti -e HOST_IP=$(ip route | grep -v docker | awk '{if(NF==11) print $9}') --entrypoint /bin/bash local/pl-fastsurfer_inference
 #
 
-FROM tensorflow/tensorflow:latest-gpu-py3
+FROM deepmi/fastsurfer:gpu-v1.1.1
 LABEL maintainer="Martin Reuter (FastSurfer), Sandip Samal (FNNDSC) (sandip.samal@childrens.harvard.edu) <dev@babyMRI.org>"
 
-WORKDIR /usr/local/src
+WORKDIR /fastsurfer
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
@@ -32,4 +32,4 @@ RUN pip install -r requirements.txt
 COPY . .
 RUN pip install .
 
-CMD ["fastsurfer_inference", "--help"]
+ENTRYPOINT [""]

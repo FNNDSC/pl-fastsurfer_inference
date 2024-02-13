@@ -1,9 +1,5 @@
-chrisapp~=2.5.3
-nose~=1.3.7
+chris_plugin==0.2.1
 pudb
-h5py==2.9.0
-nibabel==2.5.1
-numpy==1.17.4
-scikit-image
-torch
-torchvision
+loguru
+pftag==1.2.22
+pflog==1.2.26
