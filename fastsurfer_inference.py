@@ -25,7 +25,7 @@ logger.remove()
 logger.opt(colors = True)
 logger.add(sys.stderr, format=logger_format)
 
-__version__ = '1.3.7'
+__version__ = '1.3.8'
 
 DISPLAY_TITLE = r"""
   __          _                   __          _        __                             
@@ -169,6 +169,7 @@ def main(options: Namespace, inputdir: Path, outputdir: Path):
         l_cli_params.extend(["--t1",f"{input_file}",
                              "--sd",f"{outputdir}"])
         LOG(f"Running {FS_SCRIPT} on input: {input_file.name}")
+
         try:
             LOG(l_cli_params)
             subprocess.call(l_cli_params)
@@ -183,13 +184,12 @@ def get_param_list(options) -> List[str]:
     """
     list_param = []
     for k,v in options.__dict__.items():
-        if  k not in ["t1", "inputdir", "outputdir"] and options.__dict__[k]:
+        if  k not in ["t1", "inputdir", "outputdir", "saveinputmeta", "saveoutputmeta"] and options.__dict__[k]:
             list_param.append(f"--{k}")
             if options.__dict__[k]!=True:
                 list_param.append(v)
 
     return list_param
-
 
 
 if __name__ == '__main__':
