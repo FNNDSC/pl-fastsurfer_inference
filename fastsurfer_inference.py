@@ -25,7 +25,7 @@ logger.remove()
 logger.opt(colors = True)
 logger.add(sys.stderr, format=logger_format)
 
-__version__ = '1.3.8'
+__version__ = '1.3.9'
 
 DISPLAY_TITLE = r"""
   __          _                   __          _        __                             
@@ -61,11 +61,6 @@ parser.add_argument('--seg',
                   type=str,
                   default="",
                   help='Path to segmented file inside inputdir')
-parser.add_argument('--seg_log',
-                  dest='seg_log',
-                  type=str,
-                  help='name of logfile (default: deep-seg.log)',
-                  default='deep-seg.log')
 parser.add_argument('--clean_seg',
                   dest='clean_seg',
                   action  = 'store_true',
@@ -143,7 +138,7 @@ def preamble_show(options) -> None:
     title='An app to efficiently perform cortical parcellation and segmentation on raw brain MRI images',
     category='',                 # ref. https://chrisstore.co/plugins
     min_memory_limit='16Gi',    # supported units: Mi, Gi
-    min_cpu_limit='8000m',       # millicores, e.g. "1000m" = 1 CPU core
+    min_cpu_limit='16000m',       # millicores, e.g. "1000m" = 1 CPU core
     min_gpu_limit=0              # set min_gpu_limit=1 to enable GPU
 )
 @pflog.tel_logTime(
